@@ -473,13 +473,13 @@ public class Board : Photon.PunBehaviour {
             AIAimDiskPosition = new Vector3(AILastCreatedDisk.transform.position.x, AILastCreatedDisk.transform.position.y, AILastCreatedDisk.transform.position.z + 10.0f);
         }
         else {
-
-            if (AILastCreatedDisk.name == "Character4") {
+            if (enemies.Count > 0) {
                 Vector3 aim = (enemies[0].transform.position - hook.transform.position).normalized;
-                AIAimDiskPosition = hook.transform.position + (aim * -40);
+                Debug.LogWarning("Aim decieded " + aim);
+                AIAimDiskPosition = hook.transform.position + (aim * (-1 * Math.Min(Vector3.Distance(enemies[0].transform.position, hook.transform.position) + 15, Math.Abs(aim.z) > 0.5 ? 45 : 30)));
             } else {
                 AIAimDiskPosition = new Vector3(AILastCreatedDisk.transform.position.x + UnityEngine.Random.Range(-15.0f, 15.0f), AILastCreatedDisk.transform.position.y, AILastCreatedDisk.transform.position.z + UnityEngine.Random.Range(10.0f, 20.0f));
-            }           
+            } 
         }
 
         // So SpringJoint will not drag it out off aiming position
@@ -889,6 +889,7 @@ public class Board : Photon.PunBehaviour {
             }
             else {
                 Deck.Add(UnityEngine.Random.Range(0, 3));
+                //Deck.Add(i);
             }
         }
 
@@ -954,7 +955,6 @@ public class Board : Photon.PunBehaviour {
                 else {
                     Score[alliance]++;
                 }
-                Debug.Log("cube.SetAlliance called");
                 cube.SetAlliance(alliance);
             }
         }

@@ -16,7 +16,6 @@ public class Disk : Photon.PunBehaviour {
     public float releaseTime = 0.15f;
     public float cameraAdjuster;
     public float endTurn;
-    public Slider HealthBar;
     public float HeightOffSet;
 
     public List<DiskReleaseHandler> OnDiskRelease = new List<DiskReleaseHandler>();
@@ -114,11 +113,6 @@ public class Disk : Photon.PunBehaviour {
 
         // Health bar settings
         Debug.Log("Init " + name + " with health " + Health + " of total " + TotalHealth);
-
-        HealthBar.maxValue = (float)TotalHealth;
-        HealthBar.minValue = 0;
-
-        HealthBar.value = (float)Health;
 
         Id = GenerateId();
         HeightOffSet = (Id == 3) ? 0.1f : 0;
@@ -283,7 +277,6 @@ public class Disk : Photon.PunBehaviour {
     }
 
     public void SetInField() {
-        Debug.Log("Disk is in the field");
         inField = true;
     }
 
@@ -293,7 +286,7 @@ public class Disk : Photon.PunBehaviour {
         var disk = collision.gameObject.GetComponent<Disk>();
         var powerUp = collision.gameObject.GetComponent<PowerUp>();
         if (!powerUp) {
-            Debug.Log("Didnt find powerUp");
+            Debug.LogError("Didnt find powerUp");
         }
         if (!disk) {
             AudioManager.Instance.Play("Wall Hit");
@@ -378,7 +371,6 @@ public class Disk : Photon.PunBehaviour {
     [PunRPC]
     private void PunDealDamage(double dmg) {
         Health = Health - dmg;
-        HealthBar.value = (float)Health;
     }
 
     public void SetHealth(double health) {
@@ -394,7 +386,6 @@ public class Disk : Photon.PunBehaviour {
     [PunRPC]
     public void PunSetHealth(double health) {
         Health = health;
-        HealthBar.value = (float)Health;
     }
 
     internal void DestroyDisk() {
