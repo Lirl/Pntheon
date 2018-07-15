@@ -53,7 +53,7 @@ public class HealthBar : MonoBehaviour {
     private void HandleBarAccordingToHealth() {
         var health = disk.Health;
         img.fillAmount = (float) (health / totalHealth);
-        img.color = new Color(1, img.fillAmount, 0, 0.3f);
+        img.color = new Color(1 - img.fillAmount, img.fillAmount, 0, 0.3f);
     }
 
     private void HandlePosition() {

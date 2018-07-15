@@ -119,6 +119,7 @@ namespace Pantheon {
 
         public override void OnDisconnectedFromPhoton() {
             Debug.LogWarning("DemoAnimator/Launcher: OnDisconnectedFromPhoton() was called by PUN");
+            
         }
 
         public override void OnPhotonRandomJoinFailed(object[] codeAndMsg) {

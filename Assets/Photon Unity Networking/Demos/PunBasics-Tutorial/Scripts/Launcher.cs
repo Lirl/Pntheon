@@ -227,7 +227,8 @@ namespace ExitGames.Demos.DemoAnimator
 			}
 		}
 
-		#endregion
-		
-	}
+
+        #endregion
+
+    }
 }

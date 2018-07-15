@@ -305,8 +305,9 @@ public class Disk : Photon.PunBehaviour {
 
             // Play hit effect
             EffectManager.Instance.PlayHitEffect(collision.contacts[0].point);
+            disk.DealDamage(Attack);
 
-            if (classType == ClassType.Rock) {
+            /*if (classType == ClassType.Rock) {
                 if (disk.classType == ClassType.Paper) {
                     disk.DealDamage(Attack * 0.5);
                 }
@@ -338,7 +339,7 @@ public class Disk : Photon.PunBehaviour {
                 else {
                     disk.DealDamage(Attack * 2);
                 }
-            }
+            }*/
         }
 
         Board.Instance.OnDiskDamangeHandled(this, disk);

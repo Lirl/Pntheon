@@ -260,7 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8f038aeb66d7a4a822e282f03e5234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 1230185151266982}
 --- !u!114 &114425930681485478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -277,7 +276,6 @@ MonoBehaviour:
   releaseTime: 0.15
   cameraAdjuster: 0.5
   endTurn: 1
-  HealthBar: {fileID: 0}
   HeightOffSet: 0
   SJ: {fileID: 0}
   mesh: {fileID: 0}
@@ -618,7 +616,7 @@ RectTransform:
   m_GameObject: {fileID: 1969583435972456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4913771231482038}
   m_RootOrder: 1
