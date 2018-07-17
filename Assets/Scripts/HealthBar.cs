@@ -22,8 +22,8 @@ public class HealthBar : MonoBehaviour {
         
         // Setting health bar circle to match character alliance
         if (img) {
-            img.color = new Color(1, 0, 0.3f);
-            //img.color = (disk.Alliance == 1) ? new Color(0f, 0f, 160f, 0.2f) : new Color(200f, 0f, 0f, 0.2f);
+            //img.color = new Color(1, 0, 0.3f);
+            img.color = (disk.Alliance == 1) ? new Color(0f, 0f, 1f, 0.5f) : new Color(1f, 0f, 0f, 0.5f);
         } else {
             Debug.LogError("Could not find img as a health bar");
         }
@@ -52,8 +52,15 @@ public class HealthBar : MonoBehaviour {
 
     private void HandleBarAccordingToHealth() {
         var health = disk.Health;
-        img.fillAmount = (float) (health / totalHealth);
-        img.color = new Color(1 - img.fillAmount, img.fillAmount, 0, 0.3f);
+        var amount = (float) (health / totalHealth);
+        if(amount > img.fillAmount) {
+            img.fillAmount += Math.Max((amount - img.fillAmount) / 80, 0.001f);
+        }
+
+        if (amount < img.fillAmount) {
+            img.fillAmount -= Math.Max((img.fillAmount - amount) / 80, 0.001f);
+        }
+        //img.color = new Color(1 - img.fillAmount, img.fillAmount, 0, 0.3f);
     }
 
     private void HandlePosition() {

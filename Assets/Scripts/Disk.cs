@@ -377,7 +377,7 @@ public class Disk : Photon.PunBehaviour {
         isDamaged++;
         Debug.Log("isDamaged : " + isDamaged);
 
-        Invoke("StopDamaged", 0.5f);
+        Invoke("StopDamaged", 1f);
     }
 
     private void StopDamaged() {
