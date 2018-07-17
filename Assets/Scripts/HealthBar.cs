@@ -45,8 +45,8 @@ public class HealthBar : MonoBehaviour {
 
     private void HandleScale() { 
         // We divid by 6 because thats what makes it looks good
-        if(transform) {
-            transform.localScale = new Vector3(parent.transform.localScale.x / 6, parent.transform.localScale.z / 6, 10);
+        if(transform && parent && parent.transform) {
+            transform.localScale = new Vector3(parent.transform.localScale.x / 8, parent.transform.localScale.z / 8, 10);
         }
     }
 

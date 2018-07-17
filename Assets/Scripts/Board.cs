@@ -894,8 +894,8 @@ public class Board : Photon.PunBehaviour {
         }
 
         // Reset score
-        Score[0] = 0;
-        Score[1] = 0;
+        Score[0] = 200;
+        Score[1] = 200;
 
         MaxScore = MAP_WIDTH * MAP_HEIGHT;
 
@@ -917,7 +917,17 @@ public class Board : Photon.PunBehaviour {
                 if (row % 3 == 0 && column % 3 == 0) {
                     var ins = Instantiate(go, new Vector3(row, -0.4f, column) - boardOffset, Quaternion.identity);
                     //Tiles[row, column].transform.localScale = new Vector3(3, 3);
-                    ins.GetComponent<Cube>().Init(-1, row / 3, column / 3); // might be redundent as this is default
+
+                    var alliance = -1;
+                    if (column < 30) {
+                        alliance = 1;
+                    }
+
+                    if (column >= 60) {
+                        alliance = 0;
+                    }
+
+                    ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3); // might be redundent as this is default
                     Tiles[row / 3, column / 3] = ins;
                 }
             }

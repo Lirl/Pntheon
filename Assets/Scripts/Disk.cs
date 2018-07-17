@@ -18,6 +18,8 @@ public class Disk : Photon.PunBehaviour {
     public float endTurn;
     public float HeightOffSet;
 
+    public int isDamaged = 0;
+
     public List<DiskReleaseHandler> OnDiskRelease = new List<DiskReleaseHandler>();
 
     LineRenderer line;
@@ -372,6 +374,15 @@ public class Disk : Photon.PunBehaviour {
     [PunRPC]
     private void PunDealDamage(double dmg) {
         Health = Health - dmg;
+        isDamaged++;
+        Debug.Log("isDamaged : " + isDamaged);
+
+        Invoke("StopDamaged", 0.5f);
+    }
+
+    private void StopDamaged() {
+        Debug.Log("StopDamaged was called");
+        isDamaged--;
     }
 
     public void SetHealth(double health) {

@@ -60,7 +60,7 @@ public class Cube : MonoBehaviour {
 
         var disk = other.gameObject.GetComponent<Disk>();
 
-        if (disk) {
+        if (disk && disk.isDamaged <= 0) {
             Board.Instance.HandleSetTileAlliance(disk.Alliance, X, Y);
         }
     }
