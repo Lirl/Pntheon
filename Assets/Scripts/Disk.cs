@@ -385,6 +385,22 @@ public class Disk : Photon.PunBehaviour {
         isDamaged--;
     }
 
+    public void Stiff() {
+        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("PunStiff", PhotonTargets.All);
+        } else {
+            PunStiff();
+        }
+    }
+
+    [PunRPC]
+    private void PunStiff() {
+        if(gameObject) {
+            GetComponent<Rigidbody>().drag *= 1.2f;
+        }
+    }
+
     public void SetHealth(double health) {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             PhotonView photonView = PhotonView.Get(this);

@@ -383,6 +383,7 @@ public class Board : Photon.PunBehaviour {
     }
 
     public void OnDisksIdle() {
+        currentlyReleasedDisk.Stiff();
         Debug.Log("OnDisksIdle");
         if (!_diskIdleTriggered) {
             _diskIdleTriggered = true;
