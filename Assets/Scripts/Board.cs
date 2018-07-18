@@ -383,6 +383,7 @@ public class Board : Photon.PunBehaviour {
     }
 
     public void OnDisksIdle() {
+        currentlyReleasedDisk.Stiff();
         Debug.Log("OnDisksIdle");
         if (!_diskIdleTriggered) {
             _diskIdleTriggered = true;
@@ -738,8 +739,10 @@ public class Board : Photon.PunBehaviour {
             WinMessage.SetActive(true);
             if(User.instance) {
                 User.instance.wins++;
+                User.instance.xp += UnityEngine.Random.Range(20, 26) * User.instance.playerLevel;
                 User.instance.gold += Score[alliance] - Score[(alliance + 1) % 2];
-                User.instance.Save();
+                User.instance.BackFromGame = true;
+                User.instance.Save();                
                 AudioManager.Play("Win");
             }
             
@@ -748,6 +751,7 @@ public class Board : Photon.PunBehaviour {
             LoseMessage.SetActive(true);
             if(User.instance) {
                 User.instance.losses++;
+                User.instance.BackFromGame = true;
                 User.instance.Save();
                 AudioManager.Play("Lose");
             }

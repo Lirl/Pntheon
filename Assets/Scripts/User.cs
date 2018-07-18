@@ -10,14 +10,24 @@ public class User : MonoBehaviour {
 
     public static User instance;
 
+
+    #region player saved variables
+
     public string userName;
     public List<int> disks;
     public List<int> deck;
     public int wins;
     public int losses;
     public int gold;
+    public int prevGold;
     public int god;
     public static int handNextSlotIndex = 0;
+    public int xp;
+    public int playerLevel;
+
+    public bool BackFromGame;
+
+    #endregion
 
     void Awake () {
         if (instance == null) {
@@ -39,8 +49,11 @@ public class User : MonoBehaviour {
         userData.wins = instance.wins;
         userData.losses = instance.losses;
         userData.gold = instance.gold;
+        userData.prevGold = instance.prevGold;
         userData.deck = instance.deck;
         userData.god = instance.god;
+        userData.xp = instance.xp;
+        userData.playerLevel = instance.playerLevel;
 
 
         bf.Serialize(file, userData);
@@ -58,8 +71,12 @@ public class User : MonoBehaviour {
             wins = userDate.wins;
             losses = userDate.losses;
             gold = userDate.gold;
+            prevGold = userDate.prevGold;
             deck = userDate.deck;
             god = userDate.god;
+            xp = userDate.xp;
+            playerLevel = userDate.playerLevel;
+            BackFromGame = userDate.BackFromGame;
 
             file.Close();
         }
@@ -77,8 +94,12 @@ public class User : MonoBehaviour {
         instance.losses = 0;
         instance.god = 0;
         instance.gold = 1000;
+        instance.prevGold = 1000;
         instance.deck = new List<int> { 0, 1, 2 };
         instance.deck.Capacity = 5;
+        instance.xp = 0;
+        instance.playerLevel = 0;
+        instance.BackFromGame = false;
         Save();
     }
 
@@ -86,6 +107,7 @@ public class User : MonoBehaviour {
         god = code;
         Save();
     }
+
 }
 
 [Serializable]
@@ -96,5 +118,9 @@ class UserData {
     public int wins;
     public int losses;
     public int gold;
+    public int prevGold;
     public int god;
+    public int xp;
+    public int playerLevel;
+    public bool BackFromGame;
 }
