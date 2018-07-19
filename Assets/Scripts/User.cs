@@ -22,8 +22,12 @@ public class User : MonoBehaviour {
     public int prevGold;
     public int god;
     public static int handNextSlotIndex = 0;
+
+    public bool wonLastGame;
     public int xp;
     public int playerLevel;
+    public int prevXp;
+    public List<int> levelsAndXp = new List<int> { 0, 100, 300, 1000, 5000, 15000 };
 
     public bool BackFromGame;
 
@@ -53,7 +57,9 @@ public class User : MonoBehaviour {
         userData.deck = instance.deck;
         userData.god = instance.god;
         userData.xp = instance.xp;
+        userData.prevXp = instance.prevXp;
         userData.playerLevel = instance.playerLevel;
+        userData.wonLastGame = instance.wonLastGame;
 
 
         bf.Serialize(file, userData);
@@ -72,11 +78,13 @@ public class User : MonoBehaviour {
             losses = userDate.losses;
             gold = userDate.gold;
             prevGold = userDate.prevGold;
+            prevXp = userDate.prevXp;
             deck = userDate.deck;
             god = userDate.god;
             xp = userDate.xp;
             playerLevel = userDate.playerLevel;
             BackFromGame = userDate.BackFromGame;
+            wonLastGame = userDate.wonLastGame;
 
             file.Close();
         }
@@ -98,8 +106,10 @@ public class User : MonoBehaviour {
         instance.deck = new List<int> { 0, 1, 2 };
         instance.deck.Capacity = 5;
         instance.xp = 0;
+        instance.prevXp = 0;
         instance.playerLevel = 0;
         instance.BackFromGame = false;
+        instance.wonLastGame = false;
         Save();
     }
 
@@ -123,4 +133,6 @@ class UserData {
     public int xp;
     public int playerLevel;
     public bool BackFromGame;
+    public bool wonLastGame;
+    public int prevXp;
 }

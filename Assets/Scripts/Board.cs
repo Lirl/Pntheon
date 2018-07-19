@@ -606,6 +606,7 @@ public class Board : Photon.PunBehaviour {
 
                 Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(0, 0, 20), Quaternion.Euler(90, 180, 180));
                 TutorialManager.Instance.ShowMessage("Picking a powerup increases your follower powers or gain you more board control", 4, 10);
+                User.instance.playerLevel = 1;
             }
         }
 
@@ -738,6 +739,7 @@ public class Board : Photon.PunBehaviour {
         if (alliance == (isHost ? 1 : 0)) {
             WinMessage.SetActive(true);
             if(User.instance) {
+                User.instance.wonLastGame = true;
                 User.instance.wins++;
                 User.instance.xp += UnityEngine.Random.Range(20, 26) * User.instance.playerLevel;
                 User.instance.gold += Score[alliance] - Score[(alliance + 1) % 2];
@@ -750,6 +752,7 @@ public class Board : Photon.PunBehaviour {
         else {
             LoseMessage.SetActive(true);
             if(User.instance) {
+                User.instance.wonLastGame = false;
                 User.instance.losses++;
                 User.instance.BackFromGame = true;
                 User.instance.Save();
