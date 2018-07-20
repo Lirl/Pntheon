@@ -39,7 +39,15 @@ public class UseCard : MonoBehaviour {
             user.disks.Add(code);
             user.gold -= cost;
             card.transform.parent = cm.Cards.transform;
-            Gold.text = "Gold: " + user.gold.ToString();
+            DecreaseGold();
+        }
+    }
+
+    private void DecreaseGold() {
+        if (user.gold != user.prevGold) {
+            user.prevGold -= 1;
+            Gold.text = "Gold: " + user.prevGold.ToString();
+            Invoke("DecreaseGold", 0.01f);
         }
     }
 }
