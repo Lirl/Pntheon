@@ -70,6 +70,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         transform.parent = GameObject.Find("Canvas").transform;
         layout.enabled = false;
+
+        Board.Instance.CardBeginDrag(this);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -95,7 +97,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         var board = Board.Instance;
         if (cube) { // if cube defined, we played a valid play
             board.SetHookPosition(board.isHost ? 1 : 0, cube.transform.position);
-            board.CreateSelectedDisk(this, cube.transform.position);
+            board.CreateSelectedDisk(this, cube);
             DestroyEffect();
             Destroy(this);
         } else {
@@ -107,7 +109,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             alpha = 1f;
             DestroyEffect();
         }
-        
+
+        Board.Instance.CardEndDrag(this);
     }
 
     private void DestroyEffect() {
@@ -126,7 +129,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50.0f, LayerMask.GetMask("Board"))) {
 
             var cube = hit.collider.gameObject.GetComponent<Cube>();
-            if (cube && ((Board.Instance.isHost ? 1 : 0) == cube.Alliance)) {
+            if (cube && (Board.Instance.isCubeValidPlay(cube, this))) {
                 return cube;
             }
         }

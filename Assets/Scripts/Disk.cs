@@ -396,14 +396,16 @@ public class Disk : Photon.PunBehaviour {
     [PunRPC]
     private void PunDealDamage(double dmg) {
         Health = Health - dmg;
-        isDamaged++;
-        Debug.Log("isDamaged : " + isDamaged);
 
+        if(Board.Instance.isYourTurn && Alliance == (Board.Instance.isHost ? 1 : 0)) {
+            return;
+        }
+
+        isDamaged++;
         Invoke("StopDamaged", 1f);
     }
 
     private void StopDamaged() {
-        Debug.Log("StopDamaged was called");
         isDamaged--;
     }
 

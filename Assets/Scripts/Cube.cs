@@ -8,6 +8,8 @@ public class Cube : MonoBehaviour {
     public int Alliance;
     public int X;
     public int Y;
+    public bool IsGlowing;
+    private Color defaultColor;
 
     void Awake() {
         mesh = GetComponent<MeshRenderer>();
@@ -44,6 +46,7 @@ public class Cube : MonoBehaviour {
         // 5 - blue dark
 
         mesh.material = materials[alliance + ((X + Y) % 2 == 0 ? 1 : 0)];
+        defaultColor = mesh.material.color;
     }
 
     public override string ToString() {
@@ -63,5 +66,17 @@ public class Cube : MonoBehaviour {
         if (disk && disk.isDamaged <= 0) {
             Board.Instance.HandleSetTileAlliance(disk.Alliance, X, Y);
         }
+    }
+
+    private void Update() {
+        if(IsGlowing) {
+            mesh.material.color = Color.Lerp(defaultColor, Color.white, Mathf.PingPong(Time.time, 0.5f));
+        } else {
+            mesh.material.color = defaultColor;
+        }
+    }
+
+    public void toggleGlow() {
+        IsGlowing = !IsGlowing;
     }
 }

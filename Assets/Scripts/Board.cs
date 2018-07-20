@@ -136,7 +136,7 @@ public class Board : Photon.PunBehaviour {
     private Color opponentColor;
     internal bool isPillarsMoving = false;
     internal bool isLightsOn = false;
-    private GameObject _lastCreatedDisk;
+    public GameObject _lastCreatedDisk;
     private bool started;
     private bool isTutorialDontShowTime;
     private int _diskFallenCount = 0;
@@ -212,30 +212,48 @@ public class Board : Photon.PunBehaviour {
         GenerateBoard();
     }
 
+    public bool isCubeValidPlay(Cube cube, Card card) {
+
+        // Checks if cube is under player alliance
+        //return (isHost ? 1 : 0) == cube.Alliance;
+
+        if(card) {
+            // TODO: Deal with card specific effect, if any
+        }
+
+        if(isHost) {
+            return cube.Y < 5 && cube.Alliance == 1;
+        } else{
+            return cube.Y > 24 && cube.Alliance == 0;
+        }
+        
+    }
+
     internal void OnDiskOutOfBound(Disk disk) {
         _diskFallenCount++;
     }
 
     #region Disk Management
 
+    internal void CardBeginDrag(Card card) {
+        GlowCubesForValidPlay(card);
+    }
+
+    internal void CardEndDrag(Card card) {
+        Debug.Log("CardEndDrag");
+        StopCubeGlow(card);
+    }
+
     public void SetHookPosition(int alliance, Vector3 position) {
         var hook = GetHook(alliance);
         hook.transform.position = position;
     }
 
-    public void CreateSelectedDisk(Card card, Vector3 pos) {
+    public void CreateSelectedDisk(Card card, Cube cube) {
         CreateSelectedDisk(card);
+        _lastCreatedDisk.transform.position = cube.transform.position;
 
-        //var disk = _lastCreatedDisk.GetComponent<Disk>();
-        //var springJoint = disk.GetComponent<SpringJoint>();
-        //var hook = GetHook(disk.Alliance);
-
-        //hook.transform.position = pos;
-        //springJoint.connectedAnchor = hook.transform.position;
-        //springJoint.connectedBody = hook.GetComponent<Rigidbody>();
-        //disk.line.SetPosition(0, springJoint.connectedBody.position);
-
-        _lastCreatedDisk.transform.position = pos;
+        GlowCubesForValidPlay(card);
     }
 
     public void CreateSelectedDisk(Card card) {
@@ -1201,6 +1219,29 @@ public class Board : Photon.PunBehaviour {
             g.SetActive(true);
         }
     }
+
+    public void GlowCubesForValidPlay(Card card) {
+        for (int i = 0; i < MAP_HEIGHT_REAL; i++) {
+            for (int j = 0; j < MAP_WIDTH_REAL; j++) {
+                var cube = Tiles[j, i].GetComponent<Cube>();
+                if(isCubeValidPlay(cube, card)) {
+                    cube.toggleGlow();
+                }
+            }
+        }
+    }
+
+    public void StopCubeGlow(Card card) {
+        for (int i = 0; i < MAP_HEIGHT_REAL; i++) {
+            for (int j = 0; j < MAP_WIDTH_REAL; j++) {
+                var cube = Tiles[j, i].GetComponent<Cube>();
+                if (cube.IsGlowing) {
+                    cube.toggleGlow();
+                }
+            }
+        }
+    }
+
 
     private void ResetTurnSlider() {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
