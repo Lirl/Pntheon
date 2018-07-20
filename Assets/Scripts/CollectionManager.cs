@@ -164,24 +164,4 @@ public class CollectionManager : MonoBehaviour {
         user.Save();
     }
 
-    /*
-    IEnumerator Shake(float duration, float magnitude, Transform go) {
-        Vector3 originalPosition = go.position;
-        var childImage = go.GetComponentInChildren<Transform>();
-        float elapsed = 0.0f;
-
-        while(elapsed < duration) {
-
-            float x = UnityEngine.Random.Range(-1, 1) * magnitude;
-            float y = UnityEngine.Random.Range(-1, 1) * magnitude;
-
-            go.Rotate(new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z));
-            //go.position = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
-            //childImage.position = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
-            elapsed += Time.deltaTime;
-
-            yield return new WaitForSeconds(0.05f);
-        }
-        go.position = originalPosition;
-    }*/
 }
