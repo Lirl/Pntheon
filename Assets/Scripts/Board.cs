@@ -116,7 +116,7 @@ public class Board : Photon.PunBehaviour {
 
     public Vector3 boardOffset = new Vector3(29.0f, 0, 44.0f);
     private Vector3 pieceOffset = new Vector3(0.5f, 0.125f, 0.5f);
-
+    
     public bool isHost;
     public Dictionary<int, Disk> Disks = new Dictionary<int, Disk>();
     public GameObject WinMessage;
@@ -218,17 +218,32 @@ public class Board : Photon.PunBehaviour {
 
     #region Disk Management
 
-    public void CreateSelectedDisk() {
+    public void SetHookPosition(int alliance, Vector3 position) {
+        var hook = GetHook(alliance);
+        hook.transform.position = position;
+    }
 
-        GameObject button = EventSystem.current.currentSelectedGameObject;
-        Card card = button.GetComponent<Card>();
+    public void CreateSelectedDisk(Card card, Vector3 pos) {
+        CreateSelectedDisk(card);
+
+        //var disk = _lastCreatedDisk.GetComponent<Disk>();
+        //var springJoint = disk.GetComponent<SpringJoint>();
+        //var hook = GetHook(disk.Alliance);
+
+        //hook.transform.position = pos;
+        //springJoint.connectedAnchor = hook.transform.position;
+        //springJoint.connectedBody = hook.GetComponent<Rigidbody>();
+        //disk.line.SetPosition(0, springJoint.connectedBody.position);
+
+        _lastCreatedDisk.transform.position = pos;
+    }
+
+    public void CreateSelectedDisk(Card card) {
+
         int code = card.Code; // Indicates which disk should be created according ot Board DiskTypes array
 
         isZoomedOut = false;
         isZoomedIn = true;
-
-        button.transform.parent = null;
-        Destroy(button);
 
         if (Hand) {
             Hand.SetActive(false);
@@ -257,6 +272,35 @@ public class Board : Photon.PunBehaviour {
             ins = PhotonNetwork.Instantiate("Characters/Character" + code, hook.transform.position + new Vector3(0, 3f, 0), Quaternion.identity, 0);
         }
         else {
+            ins = Instantiate(prefab, new Vector3(hook.transform.position.x, hook.transform.position.y + 3f, hook.transform.position.z), Quaternion.identity);
+        }
+
+        hook.transform.position = new Vector3(hook.transform.position.x, ins.transform.position.y + ins.transform.localScale.y, hook.transform.position.z);
+
+        ins.GetComponent<SpringJoint>().connectedBody = hook.GetComponent<Rigidbody>();
+        ins.GetComponent<Disk>().Init(alliance, isYourTurn);
+
+        // Handle UI
+        if (Hand) {
+            Hand.SetActive(false);
+        }
+
+        OnDiskCreated(ins);
+
+        return ins;
+    }
+
+    internal GameObject CreateDisk(int alliance, int code, Vector3 pos) {
+        Debug.Log("CreateDisk excepted. alliance = " + alliance + " code = " + code);
+        GameObject hook = GetHook(alliance);
+
+        Debug.Log("Attempting to load prefab " + "Characters/Character" + code + " for alliance " + alliance + " isYourTurn " + isYourTurn);
+        var prefab = Resources.Load("Characters/Character" + code) as GameObject;
+
+        GameObject ins;
+        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            ins = PhotonNetwork.Instantiate("Characters/Character" + code, hook.transform.position + new Vector3(0, 3f, 0), Quaternion.identity, 0);
+        } else {
             ins = Instantiate(prefab, new Vector3(hook.transform.position.x, hook.transform.position.y + 3f, hook.transform.position.z), Quaternion.identity);
         }
 
@@ -799,7 +843,6 @@ public class Board : Photon.PunBehaviour {
             }
         }
 
-
         if (isZoomedIn) {
             if (Camera.main.orthographicSize >= 52) {
                 Camera.main.orthographicSize -= 0.5f;
@@ -898,8 +941,8 @@ public class Board : Photon.PunBehaviour {
         }
 
         // Reset score
-        Score[0] = 200;
-        Score[1] = 200;
+        Score[0] = 100;
+        Score[1] = 100;
 
         MaxScore = MAP_WIDTH * MAP_HEIGHT;
 
@@ -923,11 +966,11 @@ public class Board : Photon.PunBehaviour {
                     //Tiles[row, column].transform.localScale = new Vector3(3, 3);
 
                     var alliance = -1;
-                    if (column < 30) {
+                    if (column < 15) {
                         alliance = 1;
                     }
 
-                    if (column >= 60) {
+                    if (column >= 75) {
                         alliance = 0;
                     }
 

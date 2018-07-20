@@ -106,6 +106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Code: 2
   Name: Wizard
+  CanvasGroup: {fileID: 0}
+  _initialized: 0
 --- !u!114 &114379138844246236
 MonoBehaviour:
   m_ObjectHideFlags: 1

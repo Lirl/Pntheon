@@ -34,6 +34,7 @@ public class EffectManager : Photon.PunBehaviour {
         Effects.Add("BloodlustCaster", "Buffs/DarkAuraCaster");
         Effects.Add("MinorHeal", "Heal/MinorHeal");
         Effects.Add("MageCast", "Cast/MageCast");
+        Effects.Add("NormalSummon", "Summon/NormalSummon");
     }
 
     public GameObject PlayEffect(string name, Vector3 position, GameObject parent) {
@@ -59,6 +60,7 @@ public class EffectManager : Photon.PunBehaviour {
 
         return effect;
     }
+
 
     [PunRPC]
     public GameObject PunPlayEffect(string name, Vector3 position, GameObject parent) {

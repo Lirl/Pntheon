@@ -8,6 +8,7 @@ public delegate void DiskReleaseHandler();
 
 public class Disk : Photon.PunBehaviour {
     private Vector3 originalPosition;
+    private Rigidbody _rigidbody;
     internal bool startedMoving = false;
     private bool isMouseDown = false;
     private bool zoomOut = false;
@@ -22,16 +23,17 @@ public class Disk : Photon.PunBehaviour {
 
     public List<DiskReleaseHandler> OnDiskRelease = new List<DiskReleaseHandler>();
 
-    LineRenderer line;
+    public LineRenderer line;
     public SpringJoint SJ;
     public MeshRenderer mesh;
 
-
+    private GameObject hook;
 
     public int Alliance;
 
     public double Health;
     public double TotalHealth;
+    public float Range = 30.0f;
 
     public int Attack = 1;
     public int Id = -1;
@@ -68,8 +70,6 @@ public class Disk : Photon.PunBehaviour {
     }
 
     public void Init(int alliance) {
-
-
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunInit", PhotonTargets.All, alliance);
@@ -81,7 +81,6 @@ public class Disk : Photon.PunBehaviour {
 
     [PunRPC]
     public void PunInit(int alliance) {
-        GameObject hook;
         if (alliance == 1) {
             hook = GameObject.Find("HostHook");
         }
@@ -96,6 +95,7 @@ public class Disk : Photon.PunBehaviour {
         _normalScaleZ = gameObject.transform.localScale.z;
         originalPosition = transform.position;
 
+        _rigidbody = GetComponent<Rigidbody>();
 
         if (!Board.Instance.isYourTurn) {
             Destroy(GetComponent<SpringJoint>());
@@ -128,7 +128,29 @@ public class Disk : Photon.PunBehaviour {
 
     private void Update() {
         if (isMouseDown) {
-            Rigidbody.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var hookPos = hook.transform.position;
+
+            float speed = 1.0f;
+
+            // Keep disk in fixed range
+            if (Vector3.Distance(mousePos, hookPos) > Range) {
+                transform.position = (mousePos - hookPos).normalized * Range + hookPos;
+            } else {
+                transform.position = mousePos;
+            }
+
+            // Clamp mouse position
+            if (mousePos.z > -52 && mousePos.z < 52) {
+                if (transform.position.x > 0) {
+                    transform.position = new Vector3(Math.Min(transform.position.x, 28), transform.position.y, transform.position.z);
+                }
+
+                if (transform.position.x < 0) {
+                    transform.position = new Vector3(Math.Max(transform.position.x, -28), transform.position.y, transform.position.z);
+                }
+            }
+
             if (line) {
                 line.SetPosition(1, Rigidbody.position);
             }
@@ -396,8 +418,8 @@ public class Disk : Photon.PunBehaviour {
 
     [PunRPC]
     private void PunStiff() {
-        if(gameObject) {
-            GetComponent<Rigidbody>().drag *= 1.2f;
+        if(_rigidbody) {
+            _rigidbody.drag *= 1.2f;
         }
     }
 
