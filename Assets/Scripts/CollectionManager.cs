@@ -138,13 +138,10 @@ public class CollectionManager : MonoBehaviour {
 
     private void Glow(bool glow) {
         var section = (firstClickedIsOnDeck == true) ? Cards : Deck;
-        //var children = section.GetComponentsInChildren<Outline>();
-        var children = section.GetComponentsInChildren<Transform>();
+        var children = section.GetComponentsInChildren<Glow>();        
         for (int i = 0; i < children.Length; i++) {
-            if (children[i].tag == "CardUI") {
-                //StartCoroutine(Shake(duration, magnitude, children[i]));
-            }
-            //StartCoroutine(Shake(duration, magnitude, children[i]));
+            bool yayOrNay = glow == true ? true : false;
+            children[i].image.enabled = yayOrNay;            
         }
     }
 

@@ -38,6 +38,8 @@ public class UseCard : MonoBehaviour {
         if (user.gold >= cost) {
             user.disks.Add(code);
             user.gold -= cost;
+            //var d = Instantiate(card);
+            //d.transform.parent = cm.Store.transform;
             card.transform.parent = cm.Cards.transform;
             DecreaseGold();
         }

@@ -14,10 +14,14 @@ public class User : MonoBehaviour {
     #region player saved variables
 
     public string userName;
+
     public List<int> disks;
     public List<int> deck;
+    public List<int> cardLevels;
+
     public int wins;
     public int losses;
+
     public int gold;
     public int prevGold;
     public int god;
@@ -50,6 +54,7 @@ public class User : MonoBehaviour {
         UserData userData = new UserData();
         userData.userName = instance.userName;
         userData.disks = instance.disks;
+        userData.cardLevels = instance.cardLevels;
         userData.wins = instance.wins;
         userData.losses = instance.losses;
         userData.gold = instance.gold;
@@ -60,7 +65,6 @@ public class User : MonoBehaviour {
         userData.prevXp = instance.prevXp;
         userData.playerLevel = instance.playerLevel;
         userData.wonLastGame = instance.wonLastGame;
-
 
         bf.Serialize(file, userData);
         file.Close();
@@ -73,6 +77,7 @@ public class User : MonoBehaviour {
 
             UserData userDate = (UserData)bf.Deserialize(file);
             disks = userDate.disks;
+            cardLevels = userDate.cardLevels;
             userName = userDate.userName;
             wins = userDate.wins;
             losses = userDate.losses;
@@ -97,7 +102,8 @@ public class User : MonoBehaviour {
         string newName = texts[0].text;
 
         instance.userName = newName;
-        instance.disks = new List<int> { 3 };
+        instance.disks = new List<int> { 3};
+        instance.cardLevels = new List<int> { 1, 1, 1, 0, 0, 0, 0, 0 };
         instance.wins = 0;
         instance.losses = 0;
         instance.god = 0;
@@ -125,6 +131,7 @@ class UserData {
     public string userName;
     public List<int> disks;
     public List<int> deck;
+    public List<int> cardLevels;
     public int wins;
     public int losses;
     public int gold;
