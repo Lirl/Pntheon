@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4490717934354816}
   - component: {fileID: 212454307701784836}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 23197296669593924}
   - component: {fileID: 114485114396023850}
   - component: {fileID: 54477489831408456}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,6 +163,7 @@ MonoBehaviour:
   Alliance: -1
   X: 0
   Y: 0
+  IsGlowing: 0
 --- !u!212 &212454307701784836
 SpriteRenderer:
   m_ObjectHideFlags: 1

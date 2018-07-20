@@ -530,8 +530,8 @@ public class Board : Photon.PunBehaviour {
             }
         });
 
-        
 
+        // AIAimDiskPosition is the position of the mouse for the computer player (this is where the disk is dragged)
         if (TurnCounter == 2 && isTutorialShowMessages) {
             AIAimDiskPosition = new Vector3(AILastCreatedDisk.transform.position.x, AILastCreatedDisk.transform.position.y, AILastCreatedDisk.transform.position.z + 10.0f);
         }
@@ -544,6 +544,27 @@ public class Board : Photon.PunBehaviour {
                 AIAimDiskPosition = new Vector3(AILastCreatedDisk.transform.position.x + UnityEngine.Random.Range(-15.0f, 15.0f), AILastCreatedDisk.transform.position.y, AILastCreatedDisk.transform.position.z + UnityEngine.Random.Range(10.0f, 20.0f));
             } 
         }
+
+        // Add a random touch to the aim
+        AIAimDiskPosition = new Vector3(AIAimDiskPosition.x + UnityEngine.Random.Range(-0.3f, 0.3f), AIAimDiskPosition.y, AIAimDiskPosition.z + UnityEngine.Random.Range(-0.3f, 0.3f));
+
+        // Each disk has a range (length of the drag line) that is shouldnt reach beyond
+        // without the following lines the pc is able to do it, and therefore cheat
+        var d = AILastCreatedDisk.GetComponent<Disk>();
+        if (Vector3.Distance(AILastCreatedDisk.transform.position, AIAimDiskPosition) >  d.Range) {
+            AIAimDiskPosition = (AIAimDiskPosition - AILastCreatedDisk.transform.position).normalized * d.Range + AILastCreatedDisk.transform.position;
+        }
+
+        // Clamp aiming
+        // pc is able to drag release a disk beyond walls, which is embarrasing
+        if (AIAimDiskPosition.x > 0) {
+            AIAimDiskPosition = new Vector3(Math.Min(AIAimDiskPosition.x, 28), AIAimDiskPosition.y, AIAimDiskPosition.z);
+        }
+        if (AIAimDiskPosition.x < 0) {
+            AIAimDiskPosition = new Vector3(Math.Max(AIAimDiskPosition.x, -28), AIAimDiskPosition.y, AIAimDiskPosition.z);
+        }
+
+
 
         // So SpringJoint will not drag it out off aiming position
         AILastCreatedDisk.GetComponent<Rigidbody>().isKinematic = true;
@@ -1180,6 +1201,7 @@ public class Board : Photon.PunBehaviour {
             _diskIdleTriggered = false;
             //Invoke("OnDisksIdle", 3); causes issues when handling disk damage, since it can cause a quick shift of turn before any collision
             OnDisksIdleTrigger();
+            Invoke("OnDisksIdle", 1);
         }
         if (isTutorialShowMessages && TurnCounter == 1) {
             // Destroy swipe prefab

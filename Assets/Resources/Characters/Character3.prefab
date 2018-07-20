@@ -148,7 +148,7 @@ Rigidbody:
   m_GameObject: {fileID: 1138953422600828}
   serializedVersion: 2
   m_Mass: 1.2
-  m_Drag: 1
+  m_Drag: 0.7
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -382,11 +382,13 @@ MonoBehaviour:
   endTurn: 1
   HeightOffSet: 0
   isDamaged: 0
+  line: {fileID: 0}
   SJ: {fileID: 0}
   mesh: {fileID: 0}
   Alliance: 0
   Health: 5
   TotalHealth: 5
+  Range: 30
   Attack: 1
   Id: 3
   classType: 0
