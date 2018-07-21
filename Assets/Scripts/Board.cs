@@ -58,7 +58,7 @@ public class Board : Photon.PunBehaviour {
                 Invoke("TurnDownTheLights", 60f);
                 Invoke("StartTheFire", 80f);
                 Invoke("CheckWinner", gameTime);
-                Invoke("CreatePowerUp", 20f);
+                //Invoke("CreatePowerUp", 20f);
             }
             return;
         }
@@ -66,7 +66,7 @@ public class Board : Photon.PunBehaviour {
             // Host starts
 
             StartTurn();
-            Invoke("CreatePowerUp", 20f);
+            //Invoke("CreatePowerUp", 20f);
         }
 
         Invoke("CheckWinner", gameTime);
@@ -218,15 +218,19 @@ public class Board : Photon.PunBehaviour {
         //return (isHost ? 1 : 0) == cube.Alliance;
 
         if(card) {
-            // TODO: Deal with card specific effect, if any
+            // GUY-TODO: Deal with card specific effect, if any
+            // and return here
         }
 
-        if(isHost) {
+        return isCubeValidPlay(cube);
+    }
+
+    public bool isCubeValidPlay(Cube cube) {
+        if (isHost) {
             return cube.Y < 5 && cube.Alliance == 1;
-        } else{
+        } else {
             return cube.Y > 24 && cube.Alliance == 0;
         }
-        
     }
 
     internal void OnDiskOutOfBound(Disk disk) {
@@ -380,7 +384,7 @@ public class Board : Photon.PunBehaviour {
         // Disk2 took damage
 
         if (_numberOfDiskHits == 0 && isTutorialShowMessages) {
-            TutorialManager.Instance.ShowMessage("Each follower deals different damange, to different follower depends on class", 5, 11);
+            TutorialManager.Instance.ShowMessage("Each follower has different attack and health \n\n some even have special effects!", 5, 11);
         }
 
         _numberOfDiskHits++;
@@ -446,6 +450,7 @@ public class Board : Photon.PunBehaviour {
 
     public void OnDisksIdle() {
         currentlyReleasedDisk.Stiff();
+        
         Debug.Log("OnDisksIdle");
         if (!_diskIdleTriggered) {
             _diskIdleTriggered = true;
@@ -516,6 +521,17 @@ public class Board : Photon.PunBehaviour {
         return UnityEngine.Random.Range(4, 7);
     }
 
+    public Vector3 GetAvgPosition(List<Disk> disks) {
+        Vector3 res = new Vector3();
+        
+        for (int i = 0; i < disks.Count; i++) {
+            Disk d = disks[i];
+            res += d.transform.position;
+        }
+
+        return res / disks.Count;
+    }
+
     public void AIAimDisk() {
         Debug.Log("AIAimDisk " + (isYourTurn ? "your turn" : "not your turn"));
         // Find all disks of the opponent (human player)
@@ -530,19 +546,37 @@ public class Board : Photon.PunBehaviour {
             }
         });
 
+        var friends = DisksList.FindAll(disk => disk && disk.Alliance == 0);
+        friends.Sort(delegate (Disk d1, Disk d2) {
+            if (Vector3.Distance(d1.gameObject.transform.position, hook.transform.position) > Vector3.Distance(d2.transform.position, hook.transform.position)) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
+
 
         // AIAimDiskPosition is the position of the mouse for the computer player (this is where the disk is dragged)
         if (TurnCounter == 2 && isTutorialShowMessages) {
             AIAimDiskPosition = new Vector3(AILastCreatedDisk.transform.position.x, AILastCreatedDisk.transform.position.y, AILastCreatedDisk.transform.position.z + 10.0f);
         }
         else {
-            if (enemies.Count > 0) {
-                Vector3 aim = (enemies[0].transform.position - hook.transform.position).normalized;
-                Debug.LogWarning("Aim decieded " + aim);
+
+
+            if (enemies.Count > 1 && UnityEngine.Random.Range(0,2) == 0) {
+                Vector3 target = new Vector3();
+
+                if (enemies.Count == 2) {
+                    target = GetAvgPosition(enemies);
+                } else {
+                    target = enemies[0].transform.position;
+                }
+
+                Vector3 aim = (target - hook.transform.position).normalized;
                 AIAimDiskPosition = hook.transform.position + (aim * (-1 * Math.Min(Vector3.Distance(enemies[0].transform.position, hook.transform.position) + 15, Math.Abs(aim.z) > 0.5 ? 45 : 30)));
             } else {
                 AIAimDiskPosition = new Vector3(AILastCreatedDisk.transform.position.x + UnityEngine.Random.Range(-15.0f, 15.0f), AILastCreatedDisk.transform.position.y, AILastCreatedDisk.transform.position.z + UnityEngine.Random.Range(10.0f, 20.0f));
-            } 
+            }
         }
 
         // Add a random touch to the aim
@@ -563,8 +597,6 @@ public class Board : Photon.PunBehaviour {
         if (AIAimDiskPosition.x < 0) {
             AIAimDiskPosition = new Vector3(Math.Max(AIAimDiskPosition.x, -28), AIAimDiskPosition.y, AIAimDiskPosition.z);
         }
-
-
 
         // So SpringJoint will not drag it out off aiming position
         AILastCreatedDisk.GetComponent<Rigidbody>().isKinematic = true;
@@ -618,10 +650,10 @@ public class Board : Photon.PunBehaviour {
                     // show arrows
                     Debug.Log("Creating Arrows");
                     var hook = GetHook(1);
-                    Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(hook.gameObject.transform.position.x + 23, 10, hook.gameObject.transform.position.z), Quaternion.Euler(90, 0, 0));
-                    Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(hook.gameObject.transform.position.x, 10, hook.gameObject.transform.position.z), Quaternion.Euler(90, 0, 0));
-                    Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(hook.gameObject.transform.position.x - 23, 10, hook.gameObject.transform.position.z), Quaternion.Euler(90, 0, 0));
-                    TutorialManager.Instance.ShowMessage("Choose a follower", 2);
+                    Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(hook.gameObject.transform.position.x + 30, 30, hook.gameObject.transform.position.z), Quaternion.Euler(90, 0, 0));
+                    Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(hook.gameObject.transform.position.x, 30, hook.gameObject.transform.position.z), Quaternion.Euler(90, 0, 0));
+                    Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(hook.gameObject.transform.position.x - 30, 30, hook.gameObject.transform.position.z), Quaternion.Euler(90, 0, 0));
+                    TutorialManager.Instance.ShowMessage("Drag a follower to summon it", 2);
                 }
 
                 if (TurnCounter == 3) {
@@ -630,16 +662,13 @@ public class Board : Photon.PunBehaviour {
                     gameTime = 90;
                     Invoke("CheckWinner", 90f);
                     isTutorialDontShowTime = false;
-                    TutorialManager.Instance.ShowMessage("A round last 90 seconds! god with the highest score wins", 4, 15);
+                    TutorialManager.Instance.ShowMessage("A round lasts 90 seconds! \n\n player with the highest score wins", 4, 15);
                     TutorialManager.Instance.ShowMessage("Try hitting with a follower an opponent", 4, 12);
                 }
 
-                if (TurnCounter == 5) {
-                    TutorialManager.Instance.ShowMessage("The outer-circle of each follower indicates the followers class", 4, 12);
-                    Invoke("ShowClassMessage", 3.5f);
-                }
-
                 if (TurnCounter == 7) {
+                    TutorialManager.Instance.ShowMessage("This is a tutorial game \n\n In real games, each player has 5 seconds to play each turn", 4, 15);
+
                     // Destroy score arrow prefab
                     var arrows = GameObject.FindGameObjectsWithTag("UIPrefab");
                     foreach (GameObject food in arrows) {
@@ -660,10 +689,32 @@ public class Board : Photon.PunBehaviour {
         diskClassMessage.SetActive(true);
     }
 
+    public Cube AIGetRandomSummoningCube() {
+        Cube cube;
+        try {
+            List<Cube> options = new List<Cube>();
+            for (int i = 2; i <= 18; i++) {
+                var c = Tiles[i, 27].GetComponent<Cube>();
+                if (isCubeValidPlay(c)) {
+                    options.Add(c);
+                }
+            }
+
+            // Return random valid for play cube
+            return options[UnityEngine.Random.Range(0, options.Count)];
+
+        } catch(Exception e) {
+            return Tiles[UnityEngine.Random.Range(2, 18), 27].GetComponent<Cube>();
+        }
+                
+    }
+
     public void AIMove() {
         int cardCode = GetAICardCode();
-        AILastCreatedDisk = CreateDisk(0, cardCode);
 
+        var cube = Tiles[UnityEngine.Random.Range(2, 18), 27];
+        SetHookPosition(0, cube.transform.position);
+        AILastCreatedDisk = CreateDisk(0, cardCode);
 
         if (isTutorialShowMessages) {
             if (TurnCounter == 2) {
@@ -673,7 +724,7 @@ public class Board : Photon.PunBehaviour {
                     Destroy(food);
                 }
 
-                TutorialManager.Instance.ShowMessage("Opponent God Turn", 1, 20);
+                TutorialManager.Instance.ShowMessage("Opponent God Turn", 2, 20);
             }
 
             if (TurnCounter == 4) {
@@ -684,13 +735,13 @@ public class Board : Photon.PunBehaviour {
                 }
             }
 
-            if (TurnCounter == 6) {
+            /*if (TurnCounter == 6) {
                 PunHandleCreatePowerUp(0, 10, 19);
 
                 Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(0, 0, 20), Quaternion.Euler(90, 180, 180));
                 TutorialManager.Instance.ShowMessage("Picking a powerup increases your follower powers or gain you more board control", 4, 10);
                 User.instance.playerLevel = 1;
-            }
+            }*/
         }
 
 
@@ -761,7 +812,12 @@ public class Board : Photon.PunBehaviour {
             _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();
         }
         else {
-            EndTurn();
+            if(isTutorial) {
+                EndTurnTutorial();
+            } else {
+                EndTurn();
+            }
+
         }
     }
 
@@ -853,8 +909,11 @@ public class Board : Photon.PunBehaviour {
         }
 
         gameTime -= Time.deltaTime;
-        if (!isTutorial) {
+        if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
+            if(TimeSlider.value <= 0) {
+                ForceEndTurn();
+            }
         }
 
         if (isTutorialDontShowTime) {
@@ -1201,7 +1260,9 @@ public class Board : Photon.PunBehaviour {
             _diskIdleTriggered = false;
             //Invoke("OnDisksIdle", 3); causes issues when handling disk damage, since it can cause a quick shift of turn before any collision
             OnDisksIdleTrigger();
-            Invoke("OnDisksIdle", 1);
+            if (!isTutorialShowMessages) {
+                Invoke("OnDisksIdle", 1);
+            }
         }
         if (isTutorialShowMessages && TurnCounter == 1) {
             // Destroy swipe prefab
@@ -1210,7 +1271,7 @@ public class Board : Photon.PunBehaviour {
                 Destroy(food);
             }
 
-            Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(-11, 10, 50), Quaternion.Euler(90, 0, 180));
+            Instantiate(Resources.Load("Tutorial/ArrowIndicator"), new Vector3(-30, 10, 50), Quaternion.Euler(90, 0, 180));
             TutorialManager.Instance.ShowMessage("Your score increases the more land you control", 3, 15);
             //TutorialManager.Instance.ShowMessageInSeconds(3, "Send your follower to conquer as much land as possible", 3, 9);
         }

@@ -10,6 +10,7 @@ public class Cube : MonoBehaviour {
     public int Y;
     public bool IsGlowing;
     private Color defaultColor;
+    private int materialCode;
 
     void Awake() {
         mesh = GetComponent<MeshRenderer>();
@@ -45,7 +46,8 @@ public class Cube : MonoBehaviour {
         // 4 - blue normal
         // 5 - blue dark
 
-        mesh.material = materials[alliance + ((X + Y) % 2 == 0 ? 1 : 0)];
+        materialCode = alliance + ((X + Y) % 2 == 0 ? 1 : 0);
+        mesh.material = materials[materialCode];
         defaultColor = mesh.material.color;
     }
 
@@ -70,9 +72,12 @@ public class Cube : MonoBehaviour {
 
     private void Update() {
         if(IsGlowing) {
-            mesh.material.color = Color.Lerp(defaultColor, Color.white, Mathf.PingPong(Time.time, 0.5f));
+            var pingpong = Mathf.PingPong(Time.time, 0.3f) / 0.3f;
+            mesh.material.Lerp(materials[materialCode], materials[6], pingpong);
+            //mesh.material.color = Color.Lerp(defaultColor,Color.white, pingpong);
         } else {
-            mesh.material.color = defaultColor;
+            mesh.material = materials[materialCode];
+            //mesh.material.color = defaultColor;
         }
     }
 

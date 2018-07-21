@@ -74,8 +74,7 @@ public class Disk : Photon.PunBehaviour {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunInit", PhotonTargets.All, alliance);
-        }
-        else {
+        } else {
             PunInit(alliance);
         }
     }
@@ -84,8 +83,7 @@ public class Disk : Photon.PunBehaviour {
     public void PunInit(int alliance) {
         if (alliance == 1) {
             hook = GameObject.Find("HostHook");
-        }
-        else {
+        } else {
             hook = GameObject.Find("ClientHook");
         }
 
@@ -109,12 +107,14 @@ public class Disk : Photon.PunBehaviour {
         Alliance = alliance;
 
         // Set Disk properties according to rank
-        for (int i = 1; i < User.instance.cardLevels[Code]; i++) {
-            Attack = (int) (Mathf.Floor(Attack * 1.11f));
-            TotalHealth = (int) (TotalHealth * 1.11f);
-            Health = TotalHealth;
+        if (User.instance) {
+            for (int i = 1; i < User.instance.cardLevels[Code]; i++) {
+                Attack = (int)(Mathf.Floor(Attack * 1.11f));
+                TotalHealth = (int)(TotalHealth * 1.11f);
+                Health = TotalHealth;
+            }
         }
-
+        
         // Set disk color
         GetComponent<MeshRenderer>().material = Resources.Load("Materials/Color" + alliance, typeof(Material)) as Material;
 
@@ -172,17 +172,14 @@ public class Disk : Photon.PunBehaviour {
             if (gameObject.transform.localScale.x < _enlargeScaleX && gameObject.transform.localScale.z < _enlargeScaleZ) {
                 gameObject.transform.position += new Vector3(0, 0.05f, 0);
                 gameObject.transform.localScale += new Vector3(0.1f, 0, 0.1f);
-            }
-            else {
+            } else {
                 enlarge = 0;
             }
-        }
-        else if (enlarge < 0) {
+        } else if (enlarge < 0) {
             if (gameObject.transform.localScale.x > _shrinkScaleX && gameObject.transform.localScale.z > _shrinkScaleZ) {
                 gameObject.transform.position -= new Vector3(0, 0.05f, 0);
                 gameObject.transform.localScale -= new Vector3(0.1f, 0, 0.1f);
-            }
-            else {
+            } else {
                 enlarge = 0;
             }
         }
@@ -233,8 +230,7 @@ public class Disk : Photon.PunBehaviour {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("Release", PhotonTargets.All, pos);
-        }
-        else {
+        } else {
             Release(pos);
         }
     }
@@ -243,8 +239,7 @@ public class Disk : Photon.PunBehaviour {
         if (PhotonNetwork.connected) {
             PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunReleaseOnTurnEnd", PhotonTargets.All);
-        }
-        else {
+        } else {
             PunReleaseOnTurnEnd();
         }
     }
@@ -280,11 +275,19 @@ public class Disk : Photon.PunBehaviour {
         Invoke("RunOnDiskReleaseHandlers", 1);
 
         Board.Instance.OnDiskReleased(this);
+
+        // GUY- Invulnerable disks are not damaged
+        Invulnerable = true;
+
         if (!_forcedRelease) {
-            Invoke("StopMoving", 5);
+            Invoke("StopMoving", 6);
         }
+        Invoke("SetInvulnerableFalse", 5);
     }
 
+    public void SetInvulnerableFalse() {
+        Invulnerable = false;
+    }
 
     public void RunOnDiskReleaseHandlers() {
         foreach (var item in OnDiskRelease) {
@@ -293,7 +296,14 @@ public class Disk : Photon.PunBehaviour {
     }
 
     public void StopMoving() {
-        Rigidbody.velocity = Vector3.zero;
+        // !!!- No matter what, the disk must stop, this is why i set its velocity to 0.
+        // this was when we started playing, and disk didnt have enough drag. This is not the case, and causes
+        // cases such as: opponenet fires disk A, disk A still moving, you played a card and summoned B quick enough 
+        // to hit previously released A. Disk A might stop spontaniously though it was hit and have increased velocity as a result
+        //Rigidbody.velocity = Vector3.zero;
+        
+
+        // Anyway we should make it stiff afterward
         Rigidbody.mass = Rigidbody.mass * 1.6f;
     }
 
@@ -322,8 +332,7 @@ public class Disk : Photon.PunBehaviour {
         }
         if (!disk) {
             AudioManager.Instance.Play("Wall Hit");
-        }
-        else {
+        } else {
             AudioManager.Instance.Play("Disk Hit");
         }
 
@@ -395,8 +404,7 @@ public class Disk : Photon.PunBehaviour {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunDealDamage", PhotonTargets.All, dmg);
-        }
-        else {
+        } else {
             PunDealDamage(dmg);
         }
     }
@@ -405,12 +413,12 @@ public class Disk : Photon.PunBehaviour {
     private void PunDealDamage(double dmg) {
         Health = Health - dmg;
 
-        if(Board.Instance.isYourTurn && Alliance == (Board.Instance.isHost ? 1 : 0)) {
+        if (Invulnerable) {
             return;
         }
 
         isDamaged++;
-        Invoke("StopDamaged", 1f);
+        Invoke("StopDamaged", 1.5f);
     }
 
     private void StopDamaged() {
@@ -428,7 +436,7 @@ public class Disk : Photon.PunBehaviour {
 
     [PunRPC]
     private void PunStiff() {
-        if(_rigidbody) {
+        if (_rigidbody) {
             _rigidbody.drag *= 1.2f;
         }
     }
@@ -437,8 +445,7 @@ public class Disk : Photon.PunBehaviour {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunSetHealth", PhotonTargets.All, health);
-        }
-        else {
+        } else {
             PunSetHealth(health);
         }
     }
@@ -453,8 +460,7 @@ public class Disk : Photon.PunBehaviour {
             if (photonView.isMine) {
                 PhotonNetwork.Destroy(photonView);
             }
-        }
-        else {
+        } else {
             // TODO: have a death effect
             Destroy(gameObject);
         }
@@ -483,8 +489,7 @@ public class Disk : Photon.PunBehaviour {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             stream.SendNext(Alliance);
-        }
-        else {
+        } else {
             Alliance = (int)stream.ReceiveNext();
         }
     }
@@ -510,6 +515,8 @@ public class Disk : Photon.PunBehaviour {
     }
 
     public List<Buff> Buffs = new List<Buff>();
+
+    public bool Invulnerable { get; private set; }
 
     internal void AddBuff(string v) {
         Buffs.Add(new Buff(v));

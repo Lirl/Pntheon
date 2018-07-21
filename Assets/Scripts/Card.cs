@@ -99,6 +99,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             board.SetHookPosition(board.isHost ? 1 : 0, cube.transform.position);
             board.CreateSelectedDisk(this, cube);
             DestroyEffect();
+            //GetComponent<Image>().enabled = false;
             Destroy(this);
         } else {
             transform.position = startPosition;
