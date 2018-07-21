@@ -36,6 +36,7 @@ public class CollectionManager : MonoBehaviour {
     public float magnitude;
     [Range(0, 10f)]
     public float duration;
+    public Color NotAvailable;
 
     private void Start() {       
         user = GameObject.FindObjectOfType<User>();
@@ -54,12 +55,22 @@ public class CollectionManager : MonoBehaviour {
         }
         foreach (GameObject go in Descriptions) {
             var useCard = go.GetComponentInChildren<UseCard>();
+            for (int i = 0; i < user.cardLevels[useCard.code]; i++) {
+                //Debug.Log("Card " + code + " Level is: " + user.cardLevels[code]);
+                useCard.cost *= 2;
+            }
             if (!useCard) {
                 Debug.Log("Cant find UseCard");
             }
             if (useCard && useCard.card.transform.parent == Store.transform) {
                 Debug.Log("Found card in store");
-                ChangeText("Buy " + useCard.cost, go);
+                ChangeText("Buy " + useCard.cost, go);                   
+                useCard.upgrade.color = Color.gray;
+                var button = useCard.upgrade.transform.parent.GetComponent<Button>();                    
+                button.interactable = false;                
+            } else {
+                Debug.Log("Found card in Army");
+                useCard.upgrade.text = "Upgrade " + useCard.cost;
             }
         }
         god = GameObject.FindGameObjectWithTag("God");
@@ -77,8 +88,9 @@ public class CollectionManager : MonoBehaviour {
     internal void Buy(UseCard useCard) {
         if (user.gold >= useCard.cost) {
             user.disks.Add(useCard.code);
-            user.gold -= useCard.cost;
-            transform.parent = Deck.transform;
+            user.gold -= useCard.cost;            
+            transform.parent = Deck.transform;            
+            //useCard.upgrade.text = "Upgrade " + useCard.cost;
             Gold.text = "Gold: " + user.gold.ToString();
         }
     }

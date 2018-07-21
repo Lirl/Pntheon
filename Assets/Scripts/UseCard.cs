@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UseCard : MonoBehaviour {
 
     public int code;
-    public int cost = 100;
+    public int cost;
     public GameObject card;
     public CollectionManager cm;
     private User user;
@@ -14,18 +15,24 @@ public class UseCard : MonoBehaviour {
     public TextMeshProUGUI use;
     public TextMeshProUGUI upgrade;
     public TextMeshProUGUI Gold;
+    public Color notAvailable;
 
     private void Start() {
         user = FindObjectOfType<User>();
-        cost = 100;
-        for(int i = 0; i < User.instance.cardLevels[code]; i++) {
+        int cost = 100;
+        /*
+        for(int i = 0; i < user.cardLevels[code]; i++) {
+            Debug.Log("Card " + code + " Level is: " + user.cardLevels[code]);
             cost *= 2;
-        }
+        }*/
         if (!user) {
             Debug.Log("Card cant find user");
         }
         if (transform.parent == cm.Store.transform) {
-            Debug.Log("found card in store");
+            upgrade.color = Color.gray;
+            var b = upgrade.transform.GetComponent<Button>();
+            b.interactable = false;
+            Debug.Log("found card " + code + " in store");
             use.text = "Buy " + cost;
         }
     }
@@ -45,15 +52,27 @@ public class UseCard : MonoBehaviour {
             user.cardLevels[code] = 1;
             user.gold -= cost;
             cost *= 2;
-            //var d = Instantiate(card);
-            //d.transform.parent = cm.Store.transform;
             card.transform.parent = cm.Cards.transform;
+            var up = transform.parent.Find("Upgrade");
+            var button = up.GetComponent<Button>();
+            button.interactable = true;
+            upgrade.text = "Upgrade " + cost;
+            upgrade.color = Color.white;
             DecreaseGold();
+            user.Save();
         }
     }
 
     public void Upgrade() {
-
+        if (user.gold >= cost) {            
+            user.cardLevels[code]++;
+            user.gold -= cost;
+            cost *= 2;
+            //var d = Instantiate(card);
+            //d.transform.parent = cm.Store.transform;            
+            DecreaseGold();
+            upgrade.text = "Upgrade " + cost;
+        }
     }
 
     private void DecreaseGold() {

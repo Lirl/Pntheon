@@ -13,6 +13,7 @@ TagManager:
   - God
   - Menu
   - CardUI
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Hook
   - Disk
   - UI2
-  - 
+  - Board
   - 
   - 
   - 
