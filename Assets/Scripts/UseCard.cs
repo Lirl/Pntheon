@@ -15,6 +15,7 @@ public class UseCard : MonoBehaviour {
     public TextMeshProUGUI use;
     public TextMeshProUGUI upgrade;
     public TextMeshProUGUI Gold;
+    public TextMeshProUGUI Rank;
     public Color notAvailable;
 
     private void Start() {
@@ -68,6 +69,11 @@ public class UseCard : MonoBehaviour {
             user.cardLevels[code]++;
             user.gold -= cost;
             cost *= 2;
+            /*if (user.cardLevels[code] == 6) {
+                RectTransform rt = Rank.rectTransform;
+                
+            }*/
+            Rank.text = "" + user.cardLevels[code];
             //var d = Instantiate(card);
             //d.transform.parent = cm.Store.transform;            
             DecreaseGold();

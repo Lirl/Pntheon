@@ -403,15 +403,16 @@ MonoBehaviour:
   SJ: {fileID: 0}
   mesh: {fileID: 0}
   Alliance: 0
-  Health: 4
-  TotalHealth: 4
+  Health: 40
+  TotalHealth: 40
   Range: 30
-  Attack: 2
+  Attack: 20
   Id: 1
   classType: 1
   Enable: 1
   _released: 0
   _forcedRelease: 0
+  Code: 1
 --- !u!114 &114599971166937226
 MonoBehaviour:
   m_ObjectHideFlags: 1

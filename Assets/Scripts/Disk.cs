@@ -56,6 +56,7 @@ public class Disk : Photon.PunBehaviour {
     private bool outOfBounds = false;
 
     public bool _forcedRelease = false;
+    public int Code;
 
 
     public static int GenerateId() {
@@ -106,6 +107,13 @@ public class Disk : Photon.PunBehaviour {
         }
 
         Alliance = alliance;
+
+        // Set Disk properties according to rank
+        for (int i = 1; i < User.instance.cardLevels[Code]; i++) {
+            Attack = (int) (Mathf.Floor(Attack * 1.11f));
+            TotalHealth = (int) (TotalHealth * 1.11f);
+            Health = TotalHealth;
+        }
 
         // Set disk color
         GetComponent<MeshRenderer>().material = Resources.Load("Materials/Color" + alliance, typeof(Material)) as Material;

@@ -63,14 +63,20 @@ public class CollectionManager : MonoBehaviour {
                 Debug.Log("Cant find UseCard");
             }
             if (useCard && useCard.card.transform.parent == Store.transform) {
-                Debug.Log("Found card in store");
+                //Debug.Log("Found card in store");
                 ChangeText("Buy " + useCard.cost, go);                   
                 useCard.upgrade.color = Color.gray;
                 var button = useCard.upgrade.transform.parent.GetComponent<Button>();                    
                 button.interactable = false;                
             } else {
-                Debug.Log("Found card in Army");
+                //Debug.Log("Found card in Army");
                 useCard.upgrade.text = "Upgrade " + useCard.cost;
+            }
+            if (useCard.Rank) {
+                //Debug.Log("this is the level of LOOOOK " + user.cardLevels[useCard.code]);
+                useCard.Rank.text = "" + user.cardLevels[useCard.code];
+            } else {
+                Debug.Log("Rank of card " + useCard.code + "Was not found");
             }
         }
         god = GameObject.FindGameObjectWithTag("God");
