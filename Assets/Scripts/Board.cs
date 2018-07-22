@@ -211,6 +211,7 @@ public class Board : Photon.PunBehaviour {
         }
 
         GenerateBoard();
+        Debug.LogError("GenerateBoard called successfuly");
     }
 
     public bool isCubeValidPlay(Cube cube, Card card) {
