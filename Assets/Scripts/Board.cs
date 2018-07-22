@@ -812,12 +812,13 @@ public class Board : Photon.PunBehaviour {
         if (_lastCreatedDisk) {
             _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();
         }
-        
-        if(isTutorial) {
-            EndTurnTutorial();
-        } else {
-            EndTurn();
-        }        
+        else {
+            if(isTutorial) {
+                EndTurnTutorial();
+            } else {
+                EndTurn();
+            }
+        }
     }
 
     private void EndTurn() {
@@ -913,9 +914,9 @@ public class Board : Photon.PunBehaviour {
         gameTime -= Time.deltaTime;
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
-            if(TimeSlider.value <= 0) {
+            /*if(TimeSlider.value <= 0) {
                 ForceEndTurn();
-            }
+            }*/
         }
 
         if (isTutorialDontShowTime) {
