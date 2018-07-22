@@ -56,7 +56,7 @@ public class TutorialManager : MonoBehaviour {
     }
 
     private void ShowMessageActual(string text, int time, int fontSize) {
-        Message.fontSize = Math.Max(fontSize, 20);
+        Message.fontSize = Math.Max(fontSize, 45);
         Message.color = new Color(Message.color.r, Message.color.g, Message.color.b, 0);
         Message.text = text;
         StartCoroutine(FadeTextToFullAlpha(1f, Message));

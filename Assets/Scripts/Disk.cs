@@ -326,10 +326,7 @@ public class Disk : Photon.PunBehaviour {
     private void OnCollisionEnter(Collision collision) {
 
         var disk = collision.gameObject.GetComponent<Disk>();
-        var powerUp = collision.gameObject.GetComponent<PowerUp>();
-        if (!powerUp) {
-            Debug.LogError("Didnt find powerUp");
-        }
+
         if (!disk) {
             AudioManager.Instance.Play("Wall Hit");
         } else {
