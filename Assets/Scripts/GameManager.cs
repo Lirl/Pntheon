@@ -139,7 +139,7 @@ public class GameManager : Photon.PunBehaviour {
     /// Called when the local player left the room. We need to load the menu scene.
     /// </summary>
     public void OnLeftRoom() {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
     }
 
 
@@ -173,7 +173,6 @@ public class GameManager : Photon.PunBehaviour {
             LoadGameScene();
         }
     }
-
 
     /*public override void OnPhotonPlayerDisconnected(PhotonPlayer other) {
         Debug.Log("OnPhotonPlayerDisconnected() " + other.NickName); // seen when other disconnects
