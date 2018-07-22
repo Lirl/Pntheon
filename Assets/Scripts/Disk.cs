@@ -419,6 +419,15 @@ public class Disk : Photon.PunBehaviour {
     }
 
     private void StopDamaged() {
+        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("PunStopDamaged", PhotonTargets.All);
+        } else {
+            PunStopDamaged();
+        }
+    }
+
+    private void PunStopDamaged() {
         isDamaged--;
     }
 

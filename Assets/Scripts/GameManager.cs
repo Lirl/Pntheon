@@ -229,20 +229,37 @@ public class GameManager : Photon.PunBehaviour {
     }
 
     public void OnLevelWasLoaded() {
-        //Debug.Log("OnLevelWasLoaded ");        
-        mainMenu = GameObject.Find("MainMenu");
-        serverMenu = GameObject.Find("Host");
-        connectMenu = GameObject.Find("Connect");
+        try {
+            //Debug.Log("OnLevelWasLoaded ");        
+            mainMenu = GameObject.Find("MainMenu");
+            serverMenu = GameObject.Find("Host");
+            connectMenu = GameObject.Find("Connect");
+            var hotseat = GameObject.Find("HotSeat");
+            var Train = GameObject.Find("Train");
+            Button cancelButton = null;
 
-        serverMenu.SetActive(false);
-        connectMenu.SetActive(false);
+            if (serverMenu) {
+                serverMenu.SetActive(false);
+                cancelButton = serverMenu.GetComponentInChildren<Button>();
+            }
+            if (connectMenu) {
+                connectMenu.SetActive(false);
+            }
 
-        var hotseat = GameObject.Find("HotSeat");
-        hotseat.GetComponent<Button>().onClick.AddListener(HotseatButton);
-        var cancelButton = serverMenu.GetComponentInChildren<Button>();
-        cancelButton.GetComponent<Button>().onClick.AddListener(LeaveRoom);
-        var Train = GameObject.Find("Train");
-        Train.GetComponent<Button>().onClick.AddListener(StartGame);
+
+            if (hotseat) {
+
+            }
+            hotseat.GetComponent<Button>().onClick.AddListener(HotseatButton);
+
+            if (cancelButton) {
+                cancelButton.GetComponent<Button>().onClick.AddListener(LeaveRoom);
+            }
+
+            if (Train) {
+                Train.GetComponent<Button>().onClick.AddListener(StartGame);
+            }
+        } catch(Exception e) { }
     }
 
     public void SaveProgress() {

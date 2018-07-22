@@ -36,7 +36,6 @@ public class Cube : MonoBehaviour {
             } else {
                 alliance = alliance + 3;
             }
-
         }
 
         // 0 - normal grey
@@ -59,7 +58,11 @@ public class Cube : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         // check if this is not your turn.
         // collider is handled only in the player who has the turn
-        if(!Board.Instance.isYourTurn && !Board.Instance.isTutorial) {
+        /*if(!Board.Instance.isYourTurn && !Board.Instance.isTutorial) {
+            return;
+        }*/
+
+        if(PhotonNetwork.inRoom && !Board.Instance.isHost) {
             return;
         }
 
