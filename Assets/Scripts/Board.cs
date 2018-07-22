@@ -900,6 +900,7 @@ public class Board : Photon.PunBehaviour {
                 AudioManager.Play("Lose");
             }
         }
+        BackToMenu.transform.SetAsLastSibling();
         BackToMenu.SetActive(true);
     }
     #endregion
