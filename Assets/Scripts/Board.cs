@@ -56,7 +56,7 @@ public class Board : Photon.PunBehaviour {
             Invoke("MovePillars", 4f);
             if (!isTutorialShowMessages) {
                 Invoke("TurnDownTheLights", 60f);
-                Invoke("StartTheFire", 80f);
+                //Invoke("StartTheFire", 80f);
                 Invoke("CheckWinner", gameTime);
                 //Invoke("CreatePowerUp", 20f);
             }
@@ -1300,11 +1300,13 @@ public class Board : Photon.PunBehaviour {
         Lightnings.SetActive(true);
     }
 
+    /*
     public void StartTheFire() {
         foreach (GameObject g in Flames) {
             g.SetActive(true);
         }
     }
+    */
 
     public void GlowCubesForValidPlay(Card card) {
         for (int i = 0; i < MAP_HEIGHT_REAL; i++) {
