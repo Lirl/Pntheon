@@ -203,6 +203,7 @@ public class GameManager : Photon.PunBehaviour {
     }
 
     public void ExitMain() {
+        GameManager.Instance.isHost = false;
         LeaveRoom();
     }
 
