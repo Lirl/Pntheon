@@ -808,6 +808,12 @@ public class Board : Photon.PunBehaviour {
     }
 
     public void ForceEndTurn() {
+
+        // Don't end other player turn by mistake
+        if(!isYourTurn) {
+            return;
+        }
+
         if (_lastCreatedDisk) {
             _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();
         }
