@@ -771,6 +771,8 @@ public class Board : Photon.PunBehaviour {
             return;
         }
 
+        ResetTurnSlider();
+
         isYourTurn = true;
         TurnHasEnded = false;
         _lastCreatedDisk = null;
@@ -785,14 +787,14 @@ public class Board : Photon.PunBehaviour {
         // 10 seconds turn
         // TODO: add end turn indication
         Debug.Log("Invoke EndTurn " + (isYourTurn ? "your turn" : "not your turn"));
-        Invoke("ForceEndTurn", TurnTime);
+        //Invoke("ForceEndTurn", TurnTime);
         if (Hand) {
             Hand.SetActive(true);
         }
 
         isZoomedOut = true;
 
-        ResetTurnSlider();
+        
     }
 
     private void DrawCard() {
@@ -914,9 +916,11 @@ public class Board : Photon.PunBehaviour {
         gameTime -= Time.deltaTime;
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
-            /*if(TimeSlider.value <= 0) {
-                ForceEndTurn();
-            }*/
+            if(TimeSlider.value <= 0) {
+                if(isYourTurn) {
+                    ForceEndTurn();
+                }
+            }
         }
 
         if (isTutorialDontShowTime) {
@@ -1334,6 +1338,7 @@ public class Board : Photon.PunBehaviour {
     private void ResetTurnSlider() {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             photonView.RPC("PunResetTurnSlider", PhotonTargets.All);
+            PunResetTurnSlider();
         }
         else {
             PunResetTurnSlider();
