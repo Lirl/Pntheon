@@ -1085,6 +1085,12 @@ public class Board : Photon.PunBehaviour {
 
                     ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3); // might be redundent as this is default
                     Tiles[row / 3, column / 3] = ins;
+                    if(ins) {
+                        Debug.LogError(row / 3 + ", " + column / 3 + " cube set successfuly");
+                    } else {
+                        Debug.LogError(row / 3 + ", " + column / 3 + " was set with NULL");
+                    }
+                    
                 }
             }
         }
