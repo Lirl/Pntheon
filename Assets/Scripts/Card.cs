@@ -61,12 +61,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         hand = transform.parent;
         siblingIndex = transform.GetSiblingIndex();
 
-        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+        /*if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             effect = PhotonNetwork.Instantiate("SummonSphere", Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity, 0);
-        } else {
+        } else {*/
             var prefab = Resources.Load("SummonSphere");
             effect = (GameObject) Instantiate(prefab, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-        }
+        //}
 
         transform.parent = GameObject.Find("Canvas").transform;
         layout.enabled = false;
