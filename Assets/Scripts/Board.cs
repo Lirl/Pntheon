@@ -876,6 +876,7 @@ public class Board : Photon.PunBehaviour {
         }
 
         if (alliance == (isHost ? 1 : 0)) {
+            WinMessage.transform.SetAsLastSibling();
             WinMessage.SetActive(true);
             if(User.instance) {
                 User.instance.wonLastGame = true;
@@ -889,6 +890,7 @@ public class Board : Photon.PunBehaviour {
             
         }
         else {
+            LoseMessage.transform.SetAsLastSibling();
             LoseMessage.SetActive(true);
             if(User.instance) {
                 User.instance.wonLastGame = false;
