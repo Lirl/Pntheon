@@ -427,6 +427,7 @@ public class Disk : Photon.PunBehaviour {
         }
     }
 
+    [PunRPC]
     private void PunStopDamaged() {
         isDamaged--;
     }
