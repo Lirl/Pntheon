@@ -68,7 +68,7 @@ public class HealthBar : MonoBehaviour {
             if (!Board.Instance.isHost && !Board.Instance.isTutorial) {
                 transform.position = new Vector3(parent.transform.position.x, parent.transform.position.y, parent.transform.position.z - 5);
             } else {
-                transform.position = new Vector3(parent.transform.position.x, parent.transform.position.y, parent.transform.position.z);
+                transform.position = new Vector3(parent.transform.position.x, parent.transform.position.y, parent.transform.position.z + 5);
             }
         } else {
             if (gameObject) {
