@@ -229,6 +229,7 @@ public class GameManager : Photon.PunBehaviour {
     }
 
     public void OnLevelWasLoaded() {
+
         try {
             //Debug.Log("OnLevelWasLoaded ");        
             mainMenu = GameObject.Find("MainMenu");

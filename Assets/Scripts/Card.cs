@@ -116,11 +116,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void DestroyEffect() {
         if (effect) {
-            if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            /*if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
                 PhotonNetwork.Destroy(effect);
-            } else {
+            } else {*/
                 Destroy(effect);
-            }
+            //}
             effect = null;
         }
     }
