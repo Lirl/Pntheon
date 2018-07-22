@@ -144,6 +144,7 @@ public class Board : Photon.PunBehaviour {
     private bool isTutorialShowMessages;
 
     private void Start() {
+        Debug.LogError("BOARD START");
         Instance = this;
         AudioManager = GameObject.FindObjectOfType<AudioManager>();
 
