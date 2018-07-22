@@ -192,7 +192,7 @@ public class GameManager : Photon.PunBehaviour {
 
 
         LeaveRoom();
-        PhotonNetwork.Disconnect();
+        //PhotonNetwork.Disconnect();
 
         /*if ( PhotonNetwork.isMasterClient ) 
         {
