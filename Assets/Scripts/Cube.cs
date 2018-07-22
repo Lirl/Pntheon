@@ -68,8 +68,7 @@ public class Cube : MonoBehaviour {
 
 
         // Each player handles the collide of his disks
-        var photon = other.gameObject.GetComponent<PhotonView>();
-        if (PhotonNetwork.inRoom && photon && !photon.isMine) {
+        if (PhotonNetwork.inRoom && !PhotonNetwork.isMasterClient) {
             return;
         }
 
