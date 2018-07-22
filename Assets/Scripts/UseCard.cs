@@ -78,6 +78,8 @@ public class UseCard : MonoBehaviour {
             //d.transform.parent = cm.Store.transform;            
             DecreaseGold();
             upgrade.text = "Upgrade " + cost;
+            var UIStats = transform.parent.GetComponentInChildren<ChangeUIStats>();
+            UIStats.ChangeStats();
         }
     }
 

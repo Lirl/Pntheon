@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour {
     public int xp;
 
     public float lastModified;
-    public bool ChStats = false;
+    public bool ChStats = true;
 
     public TextMeshProUGUI Games;
     public TextMeshProUGUI Wins;
@@ -64,6 +64,7 @@ public class PlayerStats : MonoBehaviour {
     }
 
     private void ChangeStats() {
+        player.prevXp = player.xp;
         if (xp == player.xp) {
             //ChStats = false;
             player.BackFromGame = false;
@@ -108,12 +109,13 @@ public class PlayerStats : MonoBehaviour {
     }
 
     private void ChangeGold() {
-        if (gold != player.gold) {
+        player.prevGold = player.gold;
+        if (gold != player.gold) {            
             gold += 1;
             Gold.text = "Gold: " + gold.ToString();
             Invoke("ChangeGold", 0.02f);
-        }
-        player.prevGold = gold;
-        player.Save();
+        }  else {
+            player.Save();
+        }        
     }
 }
