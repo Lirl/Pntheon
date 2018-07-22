@@ -30,6 +30,9 @@ public class ChangeScene : MonoBehaviour {
         Application.LoadLevel(scene);
     }
 
+    public void ExitMain() {
+        GameManager.Instance.ExitMain();
+    }
 
     //Used in CreateUser scene only! do not attach to any other scene
     public void LoadMenuAfterCreatingUser() {

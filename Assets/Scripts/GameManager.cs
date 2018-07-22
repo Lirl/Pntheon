@@ -175,7 +175,7 @@ public class GameManager : Photon.PunBehaviour {
     }
 
 
-    public override void OnPhotonPlayerDisconnected(PhotonPlayer other) {
+    /*public override void OnPhotonPlayerDisconnected(PhotonPlayer other) {
         Debug.Log("OnPhotonPlayerDisconnected() " + other.NickName); // seen when other disconnects
 
 
@@ -184,6 +184,27 @@ public class GameManager : Photon.PunBehaviour {
             // TODO: not sure that's suppose to be here
             LoadGameScene();
         }
+    }*/
+
+    public override void OnPhotonPlayerDisconnected(PhotonPlayer other) {
+        Debug.LogError("OnPhotonPlayerDisconnected() " + other.NickName); // seen when other disconnects
+
+        // TODO: save which player left, to display a message in menu
+
+
+        LeaveRoom();
+        PhotonNetwork.Disconnect();
+
+        /*if ( PhotonNetwork.isMasterClient ) 
+        {
+            Debug.Log( "OnPhotonPlayerConnected isMasterClient " + PhotonNetwork.isMasterClient ); // called before OnPhotonPlayerDisconnected
+
+            LoadArena();
+        }*/
+    }
+
+    public void ExitMain() {
+        LeaveRoom();
     }
 
     #endregion
