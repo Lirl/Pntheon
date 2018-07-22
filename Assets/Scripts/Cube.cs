@@ -62,9 +62,9 @@ public class Cube : MonoBehaviour {
             return;
         }*/
 
-        if(PhotonNetwork.inRoom && !Board.Instance.isHost) {
+        /*if(PhotonNetwork.inRoom && !Board.Instance.isHost) {
             return;
-        }
+        }*/
 
         var disk = other.gameObject.GetComponent<Disk>();
 
