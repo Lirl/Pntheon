@@ -474,6 +474,12 @@ public class Disk : Photon.PunBehaviour {
         }
     }
 
+    ~Disk()  // destructor
+    {
+        // cleanup statements...
+        DestroyDisk();
+    }
+
 
     internal void Enlarge(float ratio) {
         _enlargeScaleX = _normalScaleX * ratio;

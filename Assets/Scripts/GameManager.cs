@@ -203,8 +203,11 @@ public class GameManager : Photon.PunBehaviour {
     }
 
     public void ExitMain() {
-        GameManager.Instance.isHost = false;
-        LeaveRoom();
+        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            LeaveRoom();
+        } else {
+            SceneManager.LoadScene("Menu");
+        }
     }
 
     #endregion
