@@ -148,6 +148,9 @@ public class GameManager : Photon.PunBehaviour {
     public void OnLeftRoom() {
         Debug.LogError("OnLeftRoom()");
         PhotonNetwork.Disconnect();
+        if (SceneManager.GetActiveScene().name != "Menu") {
+            SceneManager.LoadScene("Menu");
+        }
     }
 
     public void OnDisconnectedFromPhoton() {
