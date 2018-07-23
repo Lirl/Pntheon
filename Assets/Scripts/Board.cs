@@ -874,11 +874,14 @@ public class Board : Photon.PunBehaviour {
             if (User.instance) {
                 User.instance.wonLastGame = true;
                 User.instance.wins++;
-                User.instance.xp += UnityEngine.Random.Range(20, 26) * User.instance.playerLevel;
-                User.instance.gold += Score[alliance] - Score[(alliance + 1) % 2];
+                int xp = UnityEngine.Random.Range(20, 26) * User.instance.playerLevel;
+                User.instance.xp += xp;
+                int gold = Score[alliance] - Score[(alliance + 1) % 2];
+                User.instance.gold += gold;
                 User.instance.BackFromGame = true;
                 User.instance.Save();
                 AudioManager.Play("Win");
+                GameManager.Instance.ShowMessage = "You won! \n XP " + xp + "\n Gold " + gold;
             }
 
         } else {
@@ -890,6 +893,7 @@ public class Board : Photon.PunBehaviour {
                 User.instance.BackFromGame = true;
                 User.instance.Save();
                 AudioManager.Play("Lose");
+                GameManager.Instance.ShowMessage = "You lost in your last game";
             }
         }
         BackToMenu.transform.SetAsLastSibling();
