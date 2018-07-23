@@ -188,6 +188,7 @@ public class Disk : Photon.PunBehaviour {
             CheckIfOutOfBounds();
         }
         if ((outOfBounds && gameObject.transform.localScale.x > 0.1) || (Health <= 0 && gameObject.transform.localScale.x > 0.1)) {
+            _rigidbody.isKinematic = false;
             gameObject.transform.localScale -= new Vector3(0.05f, 0, 0.05f);
         }
         if (gameObject.transform.localScale.x < 0.1) {

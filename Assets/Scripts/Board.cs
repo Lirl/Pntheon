@@ -171,7 +171,7 @@ public class Board : Photon.PunBehaviour {
 
         // Check player connectivity
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            isHost = GameManager.Instance.isHost;
+            isHost = PhotonNetwork.isMasterClient;
         }
         else {
             isHost = true;
