@@ -125,16 +125,14 @@ public class GameManager : Photon.PunBehaviour {
     /// Function to be called when the user wants to quit game
     /// </summary>
     public void LeaveRoom() {
+        // When a user leaves we would like to destroy photon
         try {
-            // When a user leaves we would like to destroy photon
             PhotonNetwork.DestroyAll();
             PhotonNetwork.LeaveRoom();
-            Debug.LogError("OnLeftRoom() success");
+            Debug.LogError("LeaveRoom() success");
+        } catch (Exception e) {
+            Debug.LogError("LeaveRoom() error " + e.Message);
         }
-        catch(Exception e) {
-            Debug.LogError("OnLeftRoom() error " + e.Message);
-        }
-
     }
 
 
@@ -154,7 +152,9 @@ public class GameManager : Photon.PunBehaviour {
 
     public void OnDisconnectedFromPhoton() {
         Debug.LogError("OnDisconnectedFromPhoton()");
-        SceneManager.LoadScene("Menu");
+        if (SceneManager.GetActiveScene().name != "Menu") {
+            SceneManager.LoadScene("Menu");
+        }
     }
 
 
@@ -270,30 +270,31 @@ public class GameManager : Photon.PunBehaviour {
             connectMenu = GameObject.Find("Connect");
             var hotseat = GameObject.Find("HotSeat");
             var Train = GameObject.Find("Train");
-            Button cancelButton = null;
+            var cancel = GameObject.Find("CancelButton");
 
             if (serverMenu) {
                 serverMenu.SetActive(false);
-                cancelButton = serverMenu.GetComponentInChildren<Button>();
             }
             if (connectMenu) {
                 connectMenu.SetActive(false);
             }
 
-
             if (hotseat) {
-
+                hotseat.GetComponent<Button>().onClick.AddListener(HotseatButton);
             }
-            hotseat.GetComponent<Button>().onClick.AddListener(HotseatButton);
 
-            if (cancelButton) {
-                cancelButton.GetComponent<Button>().onClick.AddListener(LeaveRoom);
+            if (cancel) {
+                cancel.GetComponent<Button>().onClick.AddListener(CancelButton);
             }
 
             if (Train) {
                 Train.GetComponent<Button>().onClick.AddListener(StartGame);
             }
         } catch (Exception e) { }
+    }
+
+    private void CancelButton() {
+        LeaveRoom();
     }
 
     public void SaveProgress() {
