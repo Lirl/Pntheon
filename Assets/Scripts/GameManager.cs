@@ -125,6 +125,8 @@ public class GameManager : Photon.PunBehaviour {
     /// Function to be called when the user wants to quit game
     /// </summary>
     public void LeaveRoom() {
+        // When a user leaves we would like to destroy photon
+        PhotonNetwork.DestroyAll();
         PhotonNetwork.LeaveRoom();
     }
 
