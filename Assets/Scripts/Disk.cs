@@ -72,7 +72,6 @@ public class Disk : Photon.PunBehaviour {
 
     public void Init(int alliance) {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunInit", PhotonTargets.All, alliance);
         } else {
             PunInit(alliance);
@@ -229,7 +228,6 @@ public class Disk : Photon.PunBehaviour {
         transform.position = originalPosition;
 
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("Release", PhotonTargets.All, pos);
         } else {
             Release(pos);
@@ -238,7 +236,6 @@ public class Disk : Photon.PunBehaviour {
 
     public void ReleaseOnTurnEnd() {
         if (PhotonNetwork.connected) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunReleaseOnTurnEnd", PhotonTargets.All);
         } else {
             PunReleaseOnTurnEnd();
@@ -387,7 +384,6 @@ public class Disk : Photon.PunBehaviour {
     public void ForceSyncPosition() {
         if (Board.Instance.isYourTurn) {
             if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-                PhotonView photonView = PhotonView.Get(this);
                 photonView.RPC("PunForceSyncPosition", PhotonTargets.All, transform.position);
             }
         }
@@ -400,7 +396,6 @@ public class Disk : Photon.PunBehaviour {
 
     private void DealDamage(double dmg) {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunDealDamage", PhotonTargets.All, dmg);
         } else {
             PunDealDamage(dmg);
@@ -421,7 +416,6 @@ public class Disk : Photon.PunBehaviour {
 
     private void StopDamaged() {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunStopDamaged", PhotonTargets.All);
         } else {
             PunStopDamaged();
@@ -435,7 +429,6 @@ public class Disk : Photon.PunBehaviour {
 
     public void Stiff() {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunStiff", PhotonTargets.All);
         } else {
             PunStiff();
@@ -451,7 +444,6 @@ public class Disk : Photon.PunBehaviour {
 
     public void SetHealth(double health) {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunSetHealth", PhotonTargets.All, health);
         } else {
             PunSetHealth(health);

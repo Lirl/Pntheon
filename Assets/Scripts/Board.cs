@@ -29,8 +29,7 @@ public class Board : Photon.PunBehaviour {
     public const int MAP_HEIGHT_REAL = 30;
 
     public void StartGame() {
-        if(PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
+        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             photonView.RPC("PunStartGame", PhotonTargets.All);
         } else {
             PunStartGame();
@@ -63,8 +62,7 @@ public class Board : Photon.PunBehaviour {
                 //Invoke("CreatePowerUp", 20f);
             }
             return;
-        }
-        else if (isHost) {
+        } else if (isHost) {
             // Host starts
 
             StartTurn();
@@ -77,7 +75,7 @@ public class Board : Photon.PunBehaviour {
         Invoke("Lightning", 80f);
         Invoke("StartTheFire", 80f);
 
-       
+
     }
 
     public int powerUpsAmount = 2;
@@ -119,7 +117,7 @@ public class Board : Photon.PunBehaviour {
 
     public Vector3 boardOffset = new Vector3(29.0f, 0, 44.0f);
     private Vector3 pieceOffset = new Vector3(0.5f, 0.125f, 0.5f);
-    
+
     public bool isHost;
     public Dictionary<int, Disk> Disks = new Dictionary<int, Disk>();
     public GameObject WinMessage;
@@ -175,8 +173,7 @@ public class Board : Photon.PunBehaviour {
         // Check player connectivity
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             isHost = PhotonNetwork.isMasterClient;
-        }
-        else {
+        } else {
             isHost = true;
         }
 
@@ -185,7 +182,7 @@ public class Board : Photon.PunBehaviour {
         // connected to a room
         if (!PhotonNetwork.inRoom) {
 
-            if(User.instance && User.instance.wins + User.instance.losses == 0) {
+            if (User.instance && User.instance.wins + User.instance.losses == 0) {
                 isTutorialShowMessages = true;
                 isTutorialDontShowTime = true;
             }
@@ -222,7 +219,7 @@ public class Board : Photon.PunBehaviour {
         // Checks if cube is under player alliance
         //return (isHost ? 1 : 0) == cube.Alliance;
 
-        if(card) {
+        if (card) {
             // GUY-TODO: Deal with card specific effect, if any
             // and return here
         }
@@ -297,8 +294,7 @@ public class Board : Photon.PunBehaviour {
         GameObject ins;
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             ins = PhotonNetwork.Instantiate("Characters/Character" + code, hook.transform.position + new Vector3(0, 3f, 0), Quaternion.identity, 0);
-        }
-        else {
+        } else {
             ins = Instantiate(prefab, new Vector3(hook.transform.position.x, hook.transform.position.y + 3f, hook.transform.position.z), Quaternion.identity);
         }
 
@@ -350,15 +346,13 @@ public class Board : Photon.PunBehaviour {
         GameObject hook;
         if (alliance == 1) {
             hook = GameObject.Find("HostHook");
-        }
-        else {
+        } else {
             hook = GameObject.Find("ClientHook");
         }
         GameObject ins;
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             ins = PhotonNetwork.Instantiate(DummyDisk.name, hook.transform.position, Quaternion.identity, 0);
-        }
-        else {
+        } else {
             ins = Instantiate(DummyDisk, hook.transform.position, Quaternion.identity);
         }
 
@@ -414,8 +408,7 @@ public class Board : Photon.PunBehaviour {
     public GameObject GetHook(int alliance) {
         if (alliance == 1) {
             return GameObject.Find("HostHook");
-        }
-        else {
+        } else {
             return GameObject.Find("ClientHook");
         }
     }
@@ -428,8 +421,7 @@ public class Board : Photon.PunBehaviour {
                     pos += DisksList[i].gameObject.GetComponent<Rigidbody>().velocity;
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Debug.Log("Exception : " + e.Message);
         }
 
@@ -442,8 +434,7 @@ public class Board : Photon.PunBehaviour {
             }
 
             OnDisksIdle();
-        }
-        else {
+        } else {
             prevDiskIdleResult = pos;
             Invoke("OnDisksIdleTrigger", 1);
         }
@@ -455,14 +446,13 @@ public class Board : Photon.PunBehaviour {
 
     public void OnDisksIdle() {
         currentlyReleasedDisk.Stiff();
-        
+
         Debug.Log("OnDisksIdle");
         if (!_diskIdleTriggered) {
             _diskIdleTriggered = true;
             if (isTutorial) {
                 EndTurnTutorial();
-            }
-            else {
+            } else {
                 EndTurn();
             }
         }
@@ -528,7 +518,7 @@ public class Board : Photon.PunBehaviour {
 
     public Vector3 GetAvgPosition(List<Disk> disks) {
         Vector3 res = new Vector3();
-        
+
         for (int i = 0; i < disks.Count; i++) {
             Disk d = disks[i];
             res += d.transform.position;
@@ -545,8 +535,7 @@ public class Board : Photon.PunBehaviour {
         enemies.Sort(delegate (Disk d1, Disk d2) {
             if (Vector3.Distance(d1.gameObject.transform.position, hook.transform.position) > Vector3.Distance(d2.transform.position, hook.transform.position)) {
                 return 1;
-            }
-            else {
+            } else {
                 return -1;
             }
         });
@@ -564,11 +553,10 @@ public class Board : Photon.PunBehaviour {
         // AIAimDiskPosition is the position of the mouse for the computer player (this is where the disk is dragged)
         if (TurnCounter == 2 && isTutorialShowMessages) {
             AIAimDiskPosition = new Vector3(AILastCreatedDisk.transform.position.x, AILastCreatedDisk.transform.position.y, AILastCreatedDisk.transform.position.z + 10.0f);
-        }
-        else {
+        } else {
 
 
-            if (enemies.Count > 1 && UnityEngine.Random.Range(0,2) == 0) {
+            if (enemies.Count > 1 && UnityEngine.Random.Range(0, 2) == 0) {
                 Vector3 target = new Vector3();
 
                 if (enemies.Count == 2) {
@@ -590,7 +578,7 @@ public class Board : Photon.PunBehaviour {
         // Each disk has a range (length of the drag line) that is shouldnt reach beyond
         // without the following lines the pc is able to do it, and therefore cheat
         var d = AILastCreatedDisk.GetComponent<Disk>();
-        if (Vector3.Distance(AILastCreatedDisk.transform.position, AIAimDiskPosition) >  d.Range) {
+        if (Vector3.Distance(AILastCreatedDisk.transform.position, AIAimDiskPosition) > d.Range) {
             AIAimDiskPosition = (AIAimDiskPosition - AILastCreatedDisk.transform.position).normalized * d.Range + AILastCreatedDisk.transform.position;
         }
 
@@ -620,8 +608,7 @@ public class Board : Photon.PunBehaviour {
         if (Vector3.Distance(AILastCreatedDisk.transform.position, AIAimDiskPosition) < 0.1) {
             AIAimDiskPositionChosen = false;
             AIReleaseDisk();
-        }
-        else {
+        } else {
             AILastCreatedDisk.transform.position = Vector3.MoveTowards(AILastCreatedDisk.transform.position, AIAimDiskPosition, step);
         }
     }
@@ -682,8 +669,7 @@ public class Board : Photon.PunBehaviour {
                 }
             }
 
-        }
-        else {
+        } else {
             // AI
             Invoke("AIMove", 1);
         }
@@ -708,10 +694,10 @@ public class Board : Photon.PunBehaviour {
             // Return random valid for play cube
             return options[UnityEngine.Random.Range(0, options.Count)];
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             return Tiles[UnityEngine.Random.Range(2, 18), 27].GetComponent<Cube>();
         }
-                
+
     }
 
     public void AIMove() {
@@ -799,7 +785,7 @@ public class Board : Photon.PunBehaviour {
 
         isZoomedOut = true;
 
-        
+
     }
 
     private void DrawCard() {
@@ -818,9 +804,8 @@ public class Board : Photon.PunBehaviour {
 
         if (_lastCreatedDisk) {
             _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();
-        }
-        else {
-            if(isTutorial) {
+        } else {
+            if (isTutorial) {
                 EndTurnTutorial();
             } else {
                 EndTurn();
@@ -840,8 +825,7 @@ public class Board : Photon.PunBehaviour {
 
             if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
                 PhotonNetwork.RaiseEvent(0, GetTilesAsString(), true, null);
-            }
-            else {
+            } else {
                 isHost = !isHost;
                 StartTurn();
             }
@@ -851,11 +835,9 @@ public class Board : Photon.PunBehaviour {
     public int LeadingPlayer() {
         if (Score[0] > Score[1]) {
             return 0;
-        }
-        else if (Score[0] < Score[1]) {
+        } else if (Score[0] < Score[1]) {
             return 1;
-        }
-        else {
+        } else {
             return -1;
         }
     }
@@ -868,8 +850,7 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("CheckWinner");
         if (Score[0] >= Score[1]) {
             HandleShowWinner(0);
-        }
-        else {
+        } else {
             HandleShowWinner(1);
         }
 
@@ -885,21 +866,20 @@ public class Board : Photon.PunBehaviour {
         if (alliance == (isHost ? 1 : 0)) {
             WinMessage.transform.SetAsLastSibling();
             WinMessage.SetActive(true);
-            if(User.instance) {
+            if (User.instance) {
                 User.instance.wonLastGame = true;
                 User.instance.wins++;
                 User.instance.xp += UnityEngine.Random.Range(20, 26) * User.instance.playerLevel;
                 User.instance.gold += Score[alliance] - Score[(alliance + 1) % 2];
                 User.instance.BackFromGame = true;
-                User.instance.Save();                
+                User.instance.Save();
                 AudioManager.Play("Win");
             }
-            
-        }
-        else {
+
+        } else {
             LoseMessage.transform.SetAsLastSibling();
             LoseMessage.SetActive(true);
-            if(User.instance) {
+            if (User.instance) {
                 User.instance.wonLastGame = false;
                 User.instance.losses++;
                 User.instance.BackFromGame = true;
@@ -921,8 +901,8 @@ public class Board : Photon.PunBehaviour {
         gameTime -= Time.deltaTime;
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
-            if(TimeSlider.value <= 0) {
-                if(isYourTurn) {
+            if (TimeSlider.value <= 0) {
+                if (isYourTurn) {
                     ForceEndTurn();
                 }
             }
@@ -930,16 +910,14 @@ public class Board : Photon.PunBehaviour {
 
         if (isTutorialDontShowTime) {
             TimeMessage.GetComponentInChildren<TextMeshProUGUI>().text = "";
-        }
-        else if (gameTime >= 0 && !gameIsOver) {
+        } else if (gameTime >= 0 && !gameIsOver) {
             TimeMessage.GetComponentInChildren<TextMeshProUGUI>().text = Math.Floor(gameTime).ToString();
         }
 
         if (isTutorial) {
             yourScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[1].ToString();
             opponentScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[0].ToString();
-        }
-        else {
+        } else {
             yourScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[isHost ? 1 : 0].ToString();
             opponentScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[isHost ? 0 : 1].ToString();
         }
@@ -949,8 +927,7 @@ public class Board : Photon.PunBehaviour {
             if (_prevLead == (isHost || isTutorial ? 1 : 0)) {
                 yourScore.GetComponentInChildren<TextMeshProUGUI>().color = Color.Lerp(Color.yellow, yourColor, Mathf.PingPong(Time.time, 1));
                 opponentScore.GetComponentInChildren<TextMeshProUGUI>().color = opponentColor;
-            }
-            else {
+            } else {
                 opponentScore.GetComponentInChildren<TextMeshProUGUI>().color = Color.Lerp(Color.yellow, opponentColor, Mathf.PingPong(Time.time, 1));
                 yourScore.GetComponentInChildren<TextMeshProUGUI>().color = yourColor;
             }
@@ -959,8 +936,7 @@ public class Board : Photon.PunBehaviour {
         if (isZoomedIn) {
             if (Camera.main.orthographicSize >= 52) {
                 Camera.main.orthographicSize -= 0.5f;
-            }
-            else {
+            } else {
                 isZoomedIn = false;
             }
         }
@@ -968,8 +944,7 @@ public class Board : Photon.PunBehaviour {
         if (isZoomedOut) {
             if (Camera.main.orthographicSize <= 75) {
                 Camera.main.orthographicSize += 0.5f;
-            }
-            else {
+            } else {
                 isZoomedOut = false;
             }
         }
@@ -987,7 +962,7 @@ public class Board : Photon.PunBehaviour {
         int code = UnityEngine.Random.Range(0, powerUpsAmount);
 
         PunHandleCreatePowerUp(code, x, y);
-        
+
     }
 
     [PunRPC]
@@ -997,8 +972,7 @@ public class Board : Photon.PunBehaviour {
             GameObject rune;
             if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
                 rune = PhotonNetwork.Instantiate("Characters/PowerUps" + code, Tiles[x, y].transform.position + new Vector3(0, 2f, 0), Quaternion.Euler(new Vector3(45, 45, 45)), 0);
-            }
-            else {
+            } else {
                 rune = Instantiate(toInstantiate, Tiles[x, y].transform.position + new Vector3(0, 2f, 0), Quaternion.Euler(new Vector3(45, 45, 45)));
             }
             var runeScript = rune.GetComponent<PowerUp>();
@@ -1032,8 +1006,7 @@ public class Board : Photon.PunBehaviour {
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50.0f, LayerMask.GetMask("Board"))) {
             mouseOver.x = (int)(hit.point.x + boardOffset.x);
             mouseOver.y = (int)((hit.point.z + -1 * boardOffset.z) * -1);
-        }
-        else {
+        } else {
             mouseOver.x = -1;
             mouseOver.y = -1;
         }
@@ -1046,8 +1019,7 @@ public class Board : Photon.PunBehaviour {
         for (int i = 0; i < 30; i++) {
             if (User.instance != null) {
                 Deck.Add(User.instance.deck[rnd.Next(User.instance.deck.Count)]); // UnityEngine.Random.Range(0, 4));
-            }
-            else {
+            } else {
                 Deck.Add(UnityEngine.Random.Range(0, 3));
                 //Deck.Add(i);
             }
@@ -1089,12 +1061,12 @@ public class Board : Photon.PunBehaviour {
 
                     ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3); // might be redundent as this is default
                     Tiles[row / 3, column / 3] = ins;
-                    if(ins) {
+                    if (ins) {
                         Debug.LogError(row / 3 + ", " + column / 3 + " cube set successfuly");
                     } else {
                         Debug.LogError(row / 3 + ", " + column / 3 + " was set with NULL");
                     }
-                    
+
                 }
             }
         }
@@ -1106,10 +1078,8 @@ public class Board : Photon.PunBehaviour {
         }
 
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("PunHandleSetTileAlliance", PhotonTargets.All, alliance, x, y);
-        }
-        else {
+        } else {
             PunHandleSetTileAlliance(alliance, x, y);
         }
     }
@@ -1127,14 +1097,12 @@ public class Board : Photon.PunBehaviour {
                 if (cube.Alliance != -1) {
                     Score[cube.Alliance]--;
                     Score[alliance]++;
-                }
-                else {
+                } else {
                     Score[alliance]++;
                 }
                 cube.SetAlliance(alliance);
             }
-        }
-        else {
+        } else {
             Debug.LogWarning("Attempting to set cube " + x + ", " + y + " but Tiles[x,y] is null");
         }
     }
@@ -1221,8 +1189,7 @@ public class Board : Photon.PunBehaviour {
                             sb.Append(cube.ToString() + '+');
                         }
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Debug.Log("SyncTiles: (" + i + "," + j + ") " + e.Message);
                 }
             }
@@ -1331,7 +1298,7 @@ public class Board : Photon.PunBehaviour {
         for (int i = 0; i < MAP_HEIGHT_REAL; i++) {
             for (int j = 0; j < MAP_WIDTH_REAL; j++) {
                 var cube = Tiles[j, i].GetComponent<Cube>();
-                if(isCubeValidPlay(cube, card)) {
+                if (isCubeValidPlay(cube, card)) {
                     cube.toggleGlow();
                 }
             }
@@ -1354,8 +1321,7 @@ public class Board : Photon.PunBehaviour {
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             photonView.RPC("PunResetTurnSlider", PhotonTargets.All);
             PunResetTurnSlider();
-        }
-        else {
+        } else {
             PunResetTurnSlider();
         }
     }
@@ -1364,5 +1330,18 @@ public class Board : Photon.PunBehaviour {
     private void PunResetTurnSlider() {
         Debug.Log("PunResetTurnSlider " + TurnTime + " is host: " + isHost);
         TimeSlider.value = TurnTime;
+    }
+
+    public void DestroyBoard() {
+        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            PhotonNetwork.Destroy(gameObject);
+        } else {
+            // TODO: have a death effect
+            Destroy(gameObject);
+        }
+    }
+
+    ~Board() {
+        DestroyBoard();
     }
 }
