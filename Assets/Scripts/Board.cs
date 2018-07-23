@@ -1068,7 +1068,7 @@ public class Board : Photon.PunBehaviour {
                         alliance = 0;
                     }
 
-                    ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3, score); // might be redundent as this is default
+                    ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3); // might be redundent as this is default
                     Tiles[row / 3, column / 3] = ins;
                     /*
                     if (ins) {
