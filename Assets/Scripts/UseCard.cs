@@ -51,6 +51,7 @@ public class UseCard : MonoBehaviour {
         if (user.gold >= cost) {
             user.disks.Add(code);
             user.cardLevels[code] = 1;
+            Rank.text = "" + user.cardLevels[code];
             user.gold -= cost;
             cost *= 2;
             card.transform.parent = cm.Cards.transform;

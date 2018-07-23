@@ -745,7 +745,7 @@ public class Board : Photon.PunBehaviour {
     }
 
     public void EndTurnTutorial() {
-
+        
         // Human Player
         if (isHost) {
             if (Hand) {

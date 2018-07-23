@@ -113,7 +113,7 @@ public class User : MonoBehaviour {
         instance.deck.Capacity = 5;
         instance.xp = 0;
         instance.prevXp = 0;
-        instance.playerLevel = 0;
+        instance.playerLevel = 1;
         instance.BackFromGame = false;
         instance.wonLastGame = false;
         Save();
