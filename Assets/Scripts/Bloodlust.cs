@@ -26,11 +26,10 @@ public class Bloodlust : Photon.PunBehaviour {
 
     [PunRPC]
     public void PunBloodlustInit() {
-        Debug.LogError("Bloodlust : PunInit " + PhotonNetwork.isMasterClient);
         try {
             self = GetComponent<Disk>();
 
-            EffectManager.Instance.PlayEffect("BloodlustCaster", transform.position, gameObject);
+            EffectManager.Instance.PlayEffect("BloodlustCaster", self.transform.position, self.gameObject);
 
             self.OnDiskRelease.Add(delegate () {
                 var disks = Board.Instance.DisksList.FindAll(disk => disk && disk.gameObject && disk.Alliance == self.Alliance);

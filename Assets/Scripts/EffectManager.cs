@@ -52,7 +52,7 @@ public class EffectManager : Photon.PunBehaviour {
             /*if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
                 photonView.RPC("PunPlayEffect", PhotonTargets.All, name, position, parent);
             } else {*/
-                PunPlayEffect(name, position, parent);
+                effect = PunPlayEffect(name, position, parent);
             //}
         } else {
             Debug.LogWarning("Effect " + name + " was not initialized in InitEffect");
@@ -69,8 +69,10 @@ public class EffectManager : Photon.PunBehaviour {
         var prefab = Resources.Load("Effects/" + Effects[name]);
         effect = (GameObject)Instantiate(prefab, position + new Vector3(0, 5, 0), Quaternion.identity);
 
-        if(effect) {
+        if (effect) {
             Debug.Log("Effect " + name + " has been created successfuly");
+        } else {
+            Debug.Log("Effect " + name + " has failed to be created (returned null)");
         }
 
         if (effect && parent) {
