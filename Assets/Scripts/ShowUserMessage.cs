@@ -11,6 +11,8 @@ public class ShowUserMessage : MonoBehaviour {
     private TextMeshProUGUI text;
     float opacity = 0;
 
+    bool fadeOut = false;
+
 	// Use this for initialization
 	void Start () {
         canvas = GetComponent<CanvasGroup>();
@@ -22,13 +24,21 @@ public class ShowUserMessage : MonoBehaviour {
             message = GameManager.Instance.ShowMessage;
             text.text = message;
             GameManager.Instance.ShowMessage = null;
+
+            Invoke("SetFadeOutTrue", 2);
         } else {
             GetComponent<Image>().enabled = false;
         }
 	}
+
+    public void SetFadeOutTrue() {
+        fadeOut = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        canvas.alpha -= Time.deltaTime;
+        if(fadeOut) {
+            canvas.alpha -= Time.deltaTime;
+        }
     }
 }
