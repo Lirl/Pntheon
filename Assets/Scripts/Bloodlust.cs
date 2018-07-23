@@ -15,16 +15,18 @@ public class Bloodlust : Photon.PunBehaviour {
     }
 
     public void Init() {
-        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            photonView.RPC("PunInit", PhotonTargets.All);
+        if (false && PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            if (photonView.isMine) {
+                photonView.RPC("PunBloodlustInit", PhotonTargets.All);
+            }
         } else {
-            PunInit();
+            PunBloodlustInit();
         }
     }
 
     [PunRPC]
-    public void PunInit() {
-        Debug.LogError("Bloodlust : PunInit");
+    public void PunBloodlustInit() {
+        Debug.LogError("Bloodlust : PunInit " + PhotonNetwork.isMasterClient);
         try {
             self = GetComponent<Disk>();
 
