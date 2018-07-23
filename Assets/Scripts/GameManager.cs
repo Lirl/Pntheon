@@ -125,9 +125,16 @@ public class GameManager : Photon.PunBehaviour {
     /// Function to be called when the user wants to quit game
     /// </summary>
     public void LeaveRoom() {
-        // When a user leaves we would like to destroy photon
-        PhotonNetwork.DestroyAll();
-        PhotonNetwork.LeaveRoom();
+        try {
+            // When a user leaves we would like to destroy photon
+            PhotonNetwork.DestroyAll();
+            PhotonNetwork.LeaveRoom();
+            Debug.LogError("OnLeftRoom() success");
+        }
+        catch(Exception e) {
+            Debug.LogError("OnLeftRoom() error " + e.Message);
+        }
+
     }
 
 
@@ -141,6 +148,7 @@ public class GameManager : Photon.PunBehaviour {
     /// Called when the local player left the room. We need to load the menu scene.
     /// </summary>
     public void OnLeftRoom() {
+        Debug.LogError("OnLeftRoom()");
         PhotonNetwork.Disconnect();
     }
 
