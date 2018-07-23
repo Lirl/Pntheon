@@ -1232,9 +1232,11 @@ public class Board : Photon.PunBehaviour {
 
         for (int i = 0; i < MAP_WIDTH_REAL; i++) {
             for (int j = 0; j < MAP_HEIGHT_REAL; j++) {
-                var cube = Tiles[i, j].GetComponent<Cube>();
-                if (cube) {
-                    cube.SetAlliance(tiles[i, j]);
+                if (Tiles[i, j]) {
+                    var cube = Tiles[i, j].GetComponent<Cube>();
+                    if (cube) {
+                        cube.SetAlliance(tiles[i, j]);
+                    }
                 }
             }
         }
