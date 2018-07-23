@@ -49,11 +49,11 @@ public class EffectManager : Photon.PunBehaviour {
 
         GameObject effect = null;
         if (Effects.ContainsKey(name)) {
-            if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            /*if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
                 photonView.RPC("PunPlayEffect", PhotonTargets.All, name, position, parent);
-            } else {
+            } else {*/
                 PunPlayEffect(name, position, parent);
-            }
+            //}
         } else {
             Debug.LogWarning("Effect " + name + " was not initialized in InitEffect");
         }

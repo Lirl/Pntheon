@@ -8,10 +8,10 @@ public class Bloodlust : Photon.PunBehaviour {
     // Use this for initialization
     private Disk self;
     private void Awake() {
-        Init();
+        Invoke("Init", 0.5f);
     }
     void Start() {
-        Init();
+        Invoke("Init", 0.5f);
     }
 
     public void Init() {
