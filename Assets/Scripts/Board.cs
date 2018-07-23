@@ -929,7 +929,7 @@ public class Board : Photon.PunBehaviour {
 
         var _prevLead = LeadingPlayer();
         if (_prevLead > -1) {
-            if (_prevLead == (isHost || isTutorial ? 1 : 0)) {
+            if (_prevLead ==  1) {
                 yourScore.GetComponentInChildren<TextMeshProUGUI>().color = Color.Lerp(Color.yellow, yourColor, Mathf.PingPong(Time.time, 1));
                 opponentScore.GetComponentInChildren<TextMeshProUGUI>().color = opponentColor;
             } else {
