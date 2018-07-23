@@ -1,13 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Cube : MonoBehaviour {
     MeshRenderer mesh;
-    public Material[] materials = new Material[6];
+    public Material[] materials = new Material[9];
     public int Alliance;
     public int X;
     public int Y;
+    public int Score = 1;
     public bool IsGlowing;
     private Color defaultColor;
     private int materialCode;
@@ -26,7 +28,14 @@ public class Cube : MonoBehaviour {
         SetAlliance(alliance);
     }
 
-    public void SetAlliance(int alliance) {
+    internal void Init(int alliance, int x, int y, int score) {
+        this.Score = score;
+        Init(alliance, x, y);
+
+        // TODO : change material or color or add some golden effect
+    }
+
+    public void SetAlliance(int alliance) {        
         Alliance = alliance;
         if (alliance == -1) {
             alliance = 0; // default material
@@ -44,9 +53,20 @@ public class Cube : MonoBehaviour {
         // 3 - red dark
         // 4 - blue normal
         // 5 - blue dark
+        // 6 - Glowing
+        // 7 - Golden Normal
+        // 8 - Golden Dark
 
-        materialCode = alliance + ((X + Y) % 2 == 0 ? 1 : 0);
-        mesh.material = materials[materialCode];
+        if (Score == 2 && alliance == 0) {
+            Debug.Log("Score of cube is 2, material selected is " + materials[7 + (X % 2)]);
+            int code = 7 + ((X + Y) % 2);
+            mesh.material = materials[code];
+            materialCode = code;
+        }
+        else {
+            materialCode = alliance + ((X + Y) % 2 == 0 ? 1 : 0);
+            mesh.material = materials[materialCode];    
+        }
         defaultColor = mesh.material.color;
     }
 
@@ -93,4 +113,6 @@ public class Cube : MonoBehaviour {
     public void toggleGlow() {
         IsGlowing = !IsGlowing;
     }
+
+
 }

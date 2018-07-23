@@ -161,11 +161,13 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 4f52a8a20c2660847b6fb1e268ebf252, type: 2}
   - {fileID: 2100000, guid: 9db616faaa6ffb94980f9c1976455681, type: 2}
   - {fileID: 2100000, guid: 500edb321673bec458ed6f8cfe0d14c6, type: 2}
+  - {fileID: 2100000, guid: ca8367c26f462594080dffdd9151f5b6, type: 2}
+  - {fileID: 2100000, guid: 7273e6aaf8da8894da83111ef05e4c07, type: 2}
   Alliance: -1
   X: 0
   Y: 0
+  Score: 1
   IsGlowing: 0
-  KeepGlowing: 0
 --- !u!212 &212454307701784836
 SpriteRenderer:
   m_ObjectHideFlags: 1

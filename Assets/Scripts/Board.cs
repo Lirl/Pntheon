@@ -1054,24 +1054,29 @@ public class Board : Photon.PunBehaviour {
                 if (row % 3 == 0 && column % 3 == 0) {
                     var ins = Instantiate(go, new Vector3(row, -0.4f, column) - boardOffset, Quaternion.identity);
                     //Tiles[row, column].transform.localScale = new Vector3(3, 3);
-
+                    int score = 1;
                     var alliance = -1;
                     if (column < 15) {
                         alliance = 1;
+                    }
+
+                    if(column > 25 && column <= 65) {
+                        score = 2;                                                
                     }
 
                     if (column >= 75) {
                         alliance = 0;
                     }
 
-                    ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3); // might be redundent as this is default
+                    ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3, score); // might be redundent as this is default
                     Tiles[row / 3, column / 3] = ins;
+                    /*
                     if (ins) {
                         Debug.LogError(row / 3 + ", " + column / 3 + " cube set successfuly");
                     } else {
                         Debug.LogError(row / 3 + ", " + column / 3 + " was set with NULL");
                     }
-
+                    */
                 }
             }
         }
@@ -1100,10 +1105,10 @@ public class Board : Photon.PunBehaviour {
             var cube = Tiles[x, y].GetComponent<Cube>();
             if (cube.Alliance != alliance) {
                 if (cube.Alliance != -1) {
-                    Score[cube.Alliance]--;
-                    Score[alliance]++;
+                    Score[cube.Alliance] -= cube.Score;
+                    Score[alliance] += cube.Score;
                 } else {
-                    Score[alliance]++;
+                    Score[alliance] += cube.Score;
                 }
                 cube.SetAlliance(alliance);
             }
