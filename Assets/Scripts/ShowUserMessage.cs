@@ -39,6 +39,10 @@ public class ShowUserMessage : MonoBehaviour {
 	void Update () {
         if(fadeOut) {
             canvas.alpha -= Time.deltaTime;
+            if(canvas.alpha <= 0) {
+                GetComponent<Image>().enabled = false;
+                fadeOut = false;
+            }
         }
     }
 }
