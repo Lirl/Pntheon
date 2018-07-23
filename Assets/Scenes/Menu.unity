@@ -21446,6 +21446,7 @@ GameObject:
   - component: {fileID: 1137132105}
   - component: {fileID: 1137132104}
   - component: {fileID: 1137132106}
+  - component: {fileID: 1137132107}
   m_Layer: 5
   m_Name: UserMessage
   m_TagString: Untagged
@@ -21516,6 +21517,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9af22fe459bb74da719c40ac3bdc47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &1137132107
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137132102}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1139182484
 GameObject:
   m_ObjectHideFlags: 0
