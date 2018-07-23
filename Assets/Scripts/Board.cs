@@ -16,6 +16,7 @@ public class Board : Photon.PunBehaviour {
 
     public GameObject TimeMessage { get; private set; }
     public GameObject Lightnings;
+    public GameObject Lightnings2;
     public GameObject[] Flames;
     private AudioManager AudioManager;
 
@@ -57,6 +58,7 @@ public class Board : Photon.PunBehaviour {
             if (!isTutorialShowMessages) {
                 Invoke("TurnDownTheLights", 60f);
                 //Invoke("StartTheFire", 80f);
+                Invoke("Lightning", 80f);
                 Invoke("CheckWinner", gameTime);
                 //Invoke("CreatePowerUp", 20f);
             }
@@ -72,6 +74,7 @@ public class Board : Photon.PunBehaviour {
         Invoke("CheckWinner", gameTime);
         Invoke("MovePillars", 4f);
         Invoke("TurnDownTheLights", 60f);
+        Invoke("Lightning", 80f);
         Invoke("StartTheFire", 80f);
 
        
@@ -1310,6 +1313,10 @@ public class Board : Photon.PunBehaviour {
     public void TurnDownTheLights() {
         isLightsOn = true;
         Lightnings.SetActive(true);
+    }
+
+    public void Lightning() {
+        Lightnings2.SetActive(true);
     }
 
     /*
