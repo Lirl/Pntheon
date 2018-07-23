@@ -152,7 +152,8 @@ public class GameManager : Photon.PunBehaviour {
         PhotonNetwork.Disconnect();
 
         // Message is set when game is over. Any leave before that leads to this message
-        if(ShowMessage != null) {
+        // cause ShowMessage is null
+        if(ShowMessage == null) {
             ShowMessage = "Your opponent has left";
         }
         
