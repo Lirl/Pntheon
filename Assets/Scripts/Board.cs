@@ -1105,10 +1105,13 @@ public class Board : Photon.PunBehaviour {
             var cube = Tiles[x, y].GetComponent<Cube>();
             if (cube.Alliance != alliance) {
                 if (cube.Alliance != -1) {
-                    Score[cube.Alliance] -= cube.Score;
-                    Score[alliance] += cube.Score;
+                    //Score[cube.Alliance] -= cube.Score;
+                    Score[cube.Alliance]--;
+                    //Score[alliance] += cube.Score;
+                    Score[alliance]++;
                 } else {
-                    Score[alliance] += cube.Score;
+                    //Score[alliance] += cube.Score;
+                    Score[alliance]++;
                 }
                 cube.SetAlliance(alliance);
             }
