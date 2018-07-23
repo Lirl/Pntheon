@@ -75283,6 +75283,16 @@ MonoBehaviour:
   AIAimDiskPositionChosen: 0
   AIAimDiskPosition: {x: 0, y: 0, z: 0}
   _lastCreatedDisk: {fileID: 0}
+  CubeMaterials:
+  - {fileID: 2100000, guid: e92ca73dd3d2f3b40815270a9a905e70, type: 2}
+  - {fileID: 2100000, guid: 14e9bf483c98eb240a7d60bff3071305, type: 2}
+  - {fileID: 2100000, guid: dfac7de2d1682b943b06999bae5e5189, type: 2}
+  - {fileID: 2100000, guid: acdab32a4717ddc48af1f17db99c8582, type: 2}
+  - {fileID: 2100000, guid: 4f52a8a20c2660847b6fb1e268ebf252, type: 2}
+  - {fileID: 2100000, guid: 9db616faaa6ffb94980f9c1976455681, type: 2}
+  - {fileID: 2100000, guid: 500edb321673bec458ed6f8cfe0d14c6, type: 2}
+  - {fileID: 2100000, guid: ca8367c26f462594080dffdd9151f5b6, type: 2}
+  - {fileID: 2100000, guid: 7273e6aaf8da8894da83111ef05e4c07, type: 2}
 --- !u!156049354 &2087980918
 Grid:
   m_ObjectHideFlags: 0
