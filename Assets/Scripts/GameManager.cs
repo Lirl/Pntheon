@@ -21,6 +21,7 @@ public class GameManager : Photon.PunBehaviour {
 
 
     public static GameManager Instance { set; get; }
+    public string ShowMessage;
 
     public bool isHost;
 
@@ -77,6 +78,7 @@ public class GameManager : Photon.PunBehaviour {
         DontDestroyOnLoad(gameObject);
         //user = FindObjectOfType<User>();
 
+        ShowMessage = null;
 
         // UI Setup
         //Debug.Log("GameManager Init");
@@ -148,6 +150,7 @@ public class GameManager : Photon.PunBehaviour {
     public void OnLeftRoom() {
         Debug.LogError("OnLeftRoom()");
         PhotonNetwork.Disconnect();
+        ShowMessage = "Your opponent has left";
         if (SceneManager.GetActiveScene().name != "Menu") {
             SceneManager.LoadScene("Menu");
         }
