@@ -1163,7 +1163,7 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("OnEvent Triggered " + eventcode + " , " + content);
         if (eventcode == 0 && !isYourTurn) {
             Debug.Log("OnEvent Triggered " + eventcode + " , " + content);
-            HandleSyncTiles((string)content);
+            //HandleSyncTiles((string)content);
             StartTurn();
         }
 
