@@ -149,6 +149,9 @@ public class Board : Photon.PunBehaviour {
         Instance = this;
         AudioManager = GameObject.FindObjectOfType<AudioManager>();
 
+        // Init tiles
+        Tiles = new GameObject[MAP_WIDTH_REAL, MAP_HEIGHT_REAL];
+
         TimeSlider.maxValue = TurnTime;
 
         // UI Setop
@@ -294,8 +297,10 @@ public class Board : Photon.PunBehaviour {
         GameObject ins;
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             ins = PhotonNetwork.Instantiate("Characters/Character" + code, hook.transform.position + new Vector3(0, 3f, 0), Quaternion.identity, 0);
+            Debug.LogError("Instanciating disk with Photon");
         } else {
             ins = Instantiate(prefab, new Vector3(hook.transform.position.x, hook.transform.position.y + 3f, hook.transform.position.z), Quaternion.identity);
+            Debug.LogError("Instanciating disk normally. connected : " + PhotonNetwork.connected + ", " + PhotonNetwork.inRoom);
         }
 
         hook.transform.position = new Vector3(hook.transform.position.x, ins.transform.position.y + ins.transform.localScale.y, hook.transform.position.z);
