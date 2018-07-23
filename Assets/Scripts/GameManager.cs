@@ -154,11 +154,6 @@ public class GameManager : Photon.PunBehaviour {
         Debug.Log("GameManager: OnConnectedToMaster() was called by PUN");
     }
 
-
-    public override void OnDisconnectedFromPhoton() {
-        Debug.LogWarning("GameManagerLauncher: OnDisconnectedFromPhoton() was called by PUN");
-    }
-
     #endregion
 
     void LoadGameScene() {
