@@ -85,10 +85,10 @@ public class GameManager : Photon.PunBehaviour {
         serverMenu = GameObject.Find("Host");
         connectMenu = GameObject.Find("Connect");
 
-        if(serverMenu) {
+        if (serverMenu) {
             serverMenu.SetActive(false);
         }
-        if(connectMenu) {
+        if (connectMenu) {
             connectMenu.SetActive(false);
         }
 
@@ -146,9 +146,7 @@ public class GameManager : Photon.PunBehaviour {
 
     public void OnDisconnectedFromPhoton() {
         Debug.LogError("OnDisconnectedFromPhoton()");
-        if(SceneManager.GetActiveScene().name != "Menu") {
-            SceneManager.LoadScene("Menu");
-        }
+        SceneManager.LoadScene("Menu");
     }
 
 
@@ -264,31 +262,30 @@ public class GameManager : Photon.PunBehaviour {
             connectMenu = GameObject.Find("Connect");
             var hotseat = GameObject.Find("HotSeat");
             var Train = GameObject.Find("Train");
-            var cancel = GameObject.Find("CancelButton");
+            Button cancelButton = null;
 
             if (serverMenu) {
                 serverMenu.SetActive(false);
+                cancelButton = serverMenu.GetComponentInChildren<Button>();
             }
             if (connectMenu) {
                 connectMenu.SetActive(false);
             }
 
-            if (hotseat) {
-                hotseat.GetComponent<Button>().onClick.AddListener(HotseatButton);
-            }
 
-            if (cancel) {
-                cancel.GetComponent<Button>().onClick.AddListener(CancelButton);
+            if (hotseat) {
+
+            }
+            hotseat.GetComponent<Button>().onClick.AddListener(HotseatButton);
+
+            if (cancelButton) {
+                cancelButton.GetComponent<Button>().onClick.AddListener(LeaveRoom);
             }
 
             if (Train) {
                 Train.GetComponent<Button>().onClick.AddListener(StartGame);
             }
-        } catch(Exception e) { }
-    }
-
-    private void CancelButton() {
-        LeaveRoom();
+        } catch (Exception e) { }
     }
 
     public void SaveProgress() {
