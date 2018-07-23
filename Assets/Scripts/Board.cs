@@ -152,8 +152,6 @@ public class Board : Photon.PunBehaviour {
         // Init tiles
         Tiles = new GameObject[MAP_WIDTH_REAL, MAP_HEIGHT_REAL];
 
-        gameTime = 10;
-
         TimeSlider.maxValue = TurnTime;
 
         // UI Setop
