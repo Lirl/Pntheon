@@ -144,7 +144,7 @@ public class GameManager : Photon.PunBehaviour {
         PhotonNetwork.Disconnect();
     }
 
-    public override OnDisconnectedFromPhoton(NetworkDisconnection info) {
+    public void OnDisconnectedFromPhoton() {
         Debug.LogError("OnDisconnectedFromPhoton()");
         SceneManager.LoadScene("Menu");
     }
