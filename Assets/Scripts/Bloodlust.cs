@@ -2,26 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bloodlust : Photon.PunBehaviour {
+public class Bloodlust : MonoBehaviour {
 
     // Use this for initialization
     private Disk self;
     private void Awake() {
         Init();
     }
-    void Start () {
+    void Start() {
         Init();
     }
 
     public void Init() {
-        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            photonView.RPC("PunInit", PhotonTargets.All);
-        } else {
-            PunInit();
-        }
-    }
-
-    public void PunInit() {
         self = GetComponent<Disk>();
 
         EffectManager.Instance.PlayEffect("BloodlustCaster", transform.position, gameObject);
@@ -37,7 +29,6 @@ public class Bloodlust : Photon.PunBehaviour {
             }
         });
     }
-
 
     private void OnDestroy() {
 
