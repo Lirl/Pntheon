@@ -22,6 +22,7 @@ public class Bloodlust : Photon.PunBehaviour {
         }
     }
 
+    [PunRPC]
     public void PunInit() {
         Debug.LogError("Bloodlust : PunInit");
         try {
