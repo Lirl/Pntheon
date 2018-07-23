@@ -923,8 +923,8 @@ public class Board : Photon.PunBehaviour {
             yourScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[1].ToString();
             opponentScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[0].ToString();
         } else {
-            yourScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[isHost ? 1 : 0].ToString();
-            opponentScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[isHost ? 0 : 1].ToString();
+            yourScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[1].ToString();
+            opponentScore.GetComponentInChildren<TextMeshProUGUI>().text = Score[0].ToString();
         }
 
         var _prevLead = LeadingPlayer();
