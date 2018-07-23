@@ -43,9 +43,9 @@ public class EffectManager : Photon.PunBehaviour {
 
         // Only the player that plays this turn triggers the effect
         // though effect is seen in both players screen via PunPlayEffect
-        if (!Board.Instance.isYourTurn) {
+        /*if (!Board.Instance.isYourTurn) {
             return null;
-        }
+        }*/
 
         GameObject effect = null;
         if (Effects.ContainsKey(name)) {
