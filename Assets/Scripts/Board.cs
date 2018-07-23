@@ -143,7 +143,6 @@ public class Board : Photon.PunBehaviour {
     private int _diskFallenCount = 0;
     private int _numberOfDiskHits;
     private bool isTutorialShowMessages;
-    public Material[] CubeMaterials = new Material[9];
 
     private void Start() {
         Debug.LogError("BOARD START");
@@ -1049,9 +1048,6 @@ public class Board : Photon.PunBehaviour {
             }
         }*/
 
-        Cube.materials = CubeMaterials;
-
-
         // fill 2D Array with -1
         for (int row = 0; row < MAP_WIDTH; row++) {
             for (int column = 0; column < MAP_HEIGHT; column++) {
@@ -1064,15 +1060,11 @@ public class Board : Photon.PunBehaviour {
                         alliance = 1;
                     }
 
-                    if (column > 25 && column <= 65) {
-                        score = 2;
-                    }
-
                     if (column >= 75) {
                         alliance = 0;
                     }
 
-                    ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3, score); // might be redundent as this is default
+                    ins.GetComponent<Cube>().Init(alliance, row / 3, column / 3); // might be redundent as this is default
                     Tiles[row / 3, column / 3] = ins;
                     /*
                     if (ins) {
@@ -1109,10 +1101,13 @@ public class Board : Photon.PunBehaviour {
             var cube = Tiles[x, y].GetComponent<Cube>();
             if (cube.Alliance != alliance) {
                 if (cube.Alliance != -1) {
-                    Score[cube.Alliance] -= cube.Score;
-                    Score[alliance] += cube.Score;
+                    //Score[cube.Alliance] -= cube.Score;
+                    Score[cube.Alliance]--;
+                    //Score[alliance] += cube.Score;
+                    Score[alliance]++;
                 } else {
-                    Score[alliance] += cube.Score;
+                    //Score[alliance] += cube.Score;
+                    Score[alliance]++;
                 }
                 cube.SetAlliance(alliance);
             }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour {
     MeshRenderer mesh;
-    public static Material[] materials = new Material[9];
+    public Material[] materials = new Material[9];
     public int Alliance;
     public int X;
     public int Y;
