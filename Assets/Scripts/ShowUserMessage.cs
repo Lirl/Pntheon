@@ -7,13 +7,14 @@ using TMPro;
 public class ShowUserMessage : MonoBehaviour {
 
     string message;
-    CanvasRenderer canvas;
+    CanvasGroup canvas;
     private TextMeshProUGUI text;
     float opacity = 0;
 
 	// Use this for initialization
 	void Start () {
-        canvas = GetComponent<CanvasRenderer>();
+        canvas = GetComponent<CanvasGroup>();
+        canvas.alpha = 1;
         text = GetComponentInChildren<TextMeshProUGUI>();
 
         if (GameManager.Instance && GameManager.Instance.ShowMessage != null) {
@@ -28,6 +29,6 @@ public class ShowUserMessage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        canvas.alpha -= Time.deltaTime;
+    }
 }
