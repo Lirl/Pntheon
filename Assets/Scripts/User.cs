@@ -22,6 +22,14 @@ public class User : MonoBehaviour {
     public int wins;
     public int losses;
 
+    
+    public int WinsAgainstAI;
+    public int LossesAgainstAI;
+    public int GoldSpent;
+    public List<int> TimesPlayedCard;
+    public int CurrentWinningStreak;
+    public int LongestWinningStreak;
+
     public int gold;
     public int prevGold;
     public int god;
@@ -66,6 +74,13 @@ public class User : MonoBehaviour {
         userData.playerLevel = instance.playerLevel;
         userData.wonLastGame = instance.wonLastGame;
 
+        userData.LongestWinningStreak = instance.LongestWinningStreak;
+        userData.CurrentWinningStreak = instance.CurrentWinningStreak;
+        userData.WinsAgainstAI = instance.WinsAgainstAI;
+        userData.LossesAgainstAI = instance.LossesAgainstAI;
+        userData.TimesPlayedCard = instance.TimesPlayedCard;
+        userData.GoldSpent = instance.GoldSpent;
+
         bf.Serialize(file, userData);
         file.Close();
     }
@@ -90,6 +105,13 @@ public class User : MonoBehaviour {
             playerLevel = userDate.playerLevel;
             BackFromGame = userDate.BackFromGame;
             wonLastGame = userDate.wonLastGame;
+
+            TimesPlayedCard = userDate.TimesPlayedCard;
+            CurrentWinningStreak = userDate.CurrentWinningStreak;
+            LongestWinningStreak = userDate.LossesAgainstAI;
+            WinsAgainstAI = userDate.WinsAgainstAI;
+            LossesAgainstAI = userDate.LossesAgainstAI;
+            GoldSpent = userDate.GoldSpent;
 
             file.Close();
         }
@@ -116,6 +138,14 @@ public class User : MonoBehaviour {
         instance.playerLevel = 1;
         instance.BackFromGame = false;
         instance.wonLastGame = false;
+
+        instance.TimesPlayedCard = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 };
+        instance.CurrentWinningStreak = 0;
+        instance.LongestWinningStreak = 0;
+        instance.GoldSpent = 0;
+        instance.WinsAgainstAI = 0;
+        instance.LossesAgainstAI = 0;
+
         Save();
     }
 
@@ -142,4 +172,11 @@ class UserData {
     public bool BackFromGame;
     public bool wonLastGame;
     public int prevXp;
+
+    public int WinsAgainstAI;
+    public int LossesAgainstAI;
+    public int GoldSpent;
+    public List<int> TimesPlayedCard;
+    public int CurrentWinningStreak;
+    public int LongestWinningStreak;
 }

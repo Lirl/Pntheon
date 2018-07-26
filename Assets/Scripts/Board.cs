@@ -114,6 +114,7 @@ public class Board : Photon.PunBehaviour {
 
     public int TurnCounter = 1;
     public List<int> Deck;
+    public List<int> AIDeck;
 
     public Vector3 boardOffset = new Vector3(29.0f, 0, 44.0f);
     private Vector3 pieceOffset = new Vector3(0.5f, 0.125f, 0.5f);
@@ -148,6 +149,16 @@ public class Board : Photon.PunBehaviour {
         Debug.LogError("BOARD START");
         Instance = this;
         AudioManager = GameObject.FindObjectOfType<AudioManager>();
+
+        //Init enemy random deck
+        for (int i = 0; i < 3; i++) {
+            int add = UnityEngine.Random.Range(0, 7);
+            if (AIDeck.Contains(add)) {
+                i--;
+            } else {
+                AIDeck.Add(add);
+            }
+        }
 
         // Init tiles
         Tiles = new GameObject[MAP_WIDTH_REAL, MAP_HEIGHT_REAL];
@@ -288,7 +299,7 @@ public class Board : Photon.PunBehaviour {
     }
 
     internal GameObject CreateDisk(int alliance, int code) {
-        Debug.Log("CreateDisk excepted. alliance = " + alliance + " code = " + code);
+        //Debug.Log("CreateDisk excepted. alliance = " + alliance + " code = " + code);
         GameObject hook = GetHook(alliance);
 
         Debug.Log("Attempting to load prefab " + "Characters/Character" + code + " for alliance " + alliance + " isYourTurn " + isYourTurn);
@@ -486,39 +497,42 @@ public class Board : Photon.PunBehaviour {
     public int GetAICardCode() {
 
         //TODO: continue here
-        switch (TurnCounter) {
-            case 2:
+        if (isTutorialShowMessages) {
+            switch (TurnCounter) {
+                case 2:
 
-                // First move by the player, summon an orc warrior
-                return 5; // 
+                    // First move by the player, summon an orc warrior
+                    return 5; // 
 
-            case 4:
+                case 4:
 
-                // First move by the player, summon an orc warrior
-                return 4; // 
+                    // First move by the player, summon an orc warrior
+                    return 4; // 
 
-            case 6:
+                case 6:
 
-                // First move by the player, summon an orc warrior
-                return 6; // 
+                    // First move by the player, summon an orc warrior
+                    return 6; // 
 
-            case 8:
+                case 8:
 
-                // First move by the player, summon an orc warrior
-                return 5; //
+                    // First move by the player, summon an orc warrior
+                    return 5; //
 
 
-            case 10:
+                case 10:
 
-                // First move by the player, summon an orc warrior
-                return 5; //
+                    // First move by the player, summon an orc warrior
+                    return 5; //
 
-            default:
-                break;
+                default:
+                    break;
+            }
 
         }
 
-        return UnityEngine.Random.Range(4, 7);
+        //return UnityEngine.Random.Range(4, 7);
+        return AIDeck[UnityEngine.Random.Range(0, 3)];
     }
 
     public Vector3 GetAvgPosition(List<Disk> disks) {
@@ -859,6 +873,7 @@ public class Board : Photon.PunBehaviour {
             HandleShowWinner(1);
         }
 
+
         gameIsOver = true;
     }
 
@@ -880,6 +895,14 @@ public class Board : Photon.PunBehaviour {
                 User.instance.gold += gold;
                 User.instance.BackFromGame = true;
                 User.instance.Save();
+                if (isTutorial) {
+                    User.instance.WinsAgainstAI++;
+                } else {
+                    User.instance.CurrentWinningStreak++;
+                    if (User.instance.CurrentWinningStreak > User.instance.LongestWinningStreak) {
+                        User.instance.LongestWinningStreak = User.instance.CurrentWinningStreak;
+                    }
+                }
                 AudioManager.Play("Win");
                 GameManager.Instance.ShowMessage = "You won! \n XP " + xp + "\n Gold " + gold;
             }
@@ -891,6 +914,11 @@ public class Board : Photon.PunBehaviour {
                 User.instance.wonLastGame = false;
                 User.instance.losses++;
                 User.instance.BackFromGame = true;
+                if (isTutorial) {
+                    User.instance.LossesAgainstAI++;                   
+                } else {
+                    User.instance.CurrentWinningStreak = 0;
+                }
                 User.instance.Save();
                 AudioManager.Play("Lose");
                 GameManager.Instance.ShowMessage = "You lost in your last game";
@@ -1254,7 +1282,12 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("OnDiskReleased");
         currentlyReleasedDisk = disk;
 
-        if (disk.Alliance == (isHost ? 1 : 0) || isTutorial) {
+        // FIX
+        if (1 == (TurnCounter % 2)) {
+            User.instance.TimesPlayedCard[disk.Code]++;
+        }
+
+        if (disk.Alliance == (isHost ? 1 : 0) || isTutorial) {           
             // This is the player that played the move
             // He should end the turn
             _diskIdleTriggered = false;

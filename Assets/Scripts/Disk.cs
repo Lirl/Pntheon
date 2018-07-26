@@ -255,7 +255,7 @@ public class Disk : Photon.PunBehaviour {
     [PunRPC]
     public void Release(Vector3 pos) {
         Debug.Log("Release fired for player " + (Board.Instance.isHost ? 1 : 0) + " pos: " + transform.position.x + "," + transform.position.y + "," + transform.position.z);
-
+        
         Enable = false;
         isMouseDown = false;
 

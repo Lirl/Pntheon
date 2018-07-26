@@ -84,7 +84,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         effect.transform.position = new Vector3(mousePos.x, 10, mousePos.z);
 
-        Debug.Log(Math.Abs(startPosition.z - transform.position.z));
+        //Debug.Log(Math.Abs(startPosition.z - transform.position.z));
         if (Math.Abs(startPosition.z - transform.position.z) > 10.0f) {
             alpha = 0.0f;
         } else {

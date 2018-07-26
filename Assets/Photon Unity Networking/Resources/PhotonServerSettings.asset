@@ -56,4 +56,5 @@ MonoBehaviour:
   - PunPlayHitEffect
   - PunStiff
   - PunStopDamaged
+  - PunBloodlustInit
   DisableAutoOpenWizard: 1
