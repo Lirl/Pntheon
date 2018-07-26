@@ -791,7 +791,7 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("Player " + (isHost ? 1 : 2) + " turn #" + TurnCounter + " YourTurn: " + isYourTurn + " isHost: " + isHost);
 
         Alert("Player " + (isHost ? 1 : 2) + " turn #" + TurnCounter);
-        var children = Hand.GetComponentsInChildren<Transform>().Length;
+        var children = Hand.GetComponentsInChildren<Image>().Length;
         if (children < 3) {
             Debug.Log("You Have less than 3 cards in your hand");
             DrawCard();
