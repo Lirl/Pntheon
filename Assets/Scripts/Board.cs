@@ -41,10 +41,12 @@ public class Board : Photon.PunBehaviour {
 
         TurnTime = 8;
         TurnCounter = 1;
-
-        for (int i = 0; i < 2; i++) {
-            DrawCard();
+        if (isHost) {
+            for (int i = 0; i < 2; i++) {
+                DrawCard();
+            }
         }
+        
         //Card.CreateCard(7, Hand.transform);
         //Card.CreateCard(7, Hand.transform);
         //Card.CreateCard(7, Hand.transform);
