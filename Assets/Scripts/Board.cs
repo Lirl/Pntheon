@@ -791,9 +791,13 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("Player " + (isHost ? 1 : 2) + " turn #" + TurnCounter + " YourTurn: " + isYourTurn + " isHost: " + isHost);
 
         Alert("Player " + (isHost ? 1 : 2) + " turn #" + TurnCounter);
-
-        DrawCard();
-
+        var children = Hand.GetComponentsInChildren<Transform>().Length;
+        if (children < 3) {
+            Debug.Log("You Have less than 3 cards in your hand");
+            DrawCard();
+        } else {
+            Debug.Log("Number of Children is " + children);
+        }
         // 10 seconds turn
         // TODO: add end turn indication
         Debug.Log("Invoke EndTurn " + (isYourTurn ? "your turn" : "not your turn"));
