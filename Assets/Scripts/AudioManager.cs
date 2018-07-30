@@ -10,8 +10,9 @@ public class AudioManager : MonoBehaviour {
     public Sound[] sounds;
     public static AudioManager Instance;
     public Slider slider;
-
+    public float masterVolume;
     void Awake() {
+        DontDestroyOnLoad(this);
         Instance = this;
         foreach (Sound s in sounds) {
             s.src = gameObject.AddComponent<AudioSource>();
@@ -26,10 +27,10 @@ public class AudioManager : MonoBehaviour {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         float lastVolume = s.src.volume;
         Debug.LogError(lastVolume + " last");
-        s.src.volume = s.src.volume * slider.value;
+        s.src.volume = s.src.volume * masterVolume;
         Debug.LogError(s.src.volume + " after change");
         s.src.Play();
-        changeVolume(s, lastVolume);
+        StartCoroutine(changeVolume(s, lastVolume, 0.2f));
        
         //Debug.Log("Played Sound");
     }
@@ -39,18 +40,14 @@ public class AudioManager : MonoBehaviour {
         s.src.PlayScheduled(time);
     }
 
-    public void changeVolume(Sound s, float volume) {
-         s.src.volume = volume;
+    IEnumerator changeVolume(Sound s, float volume, float delayTime) {
+        yield return new WaitForSeconds(delayTime);
+        s.src.volume = volume;
+        
     }
-    /*
-    public void setVolumeBack (float volume) {
-        audiomix.SetFloat("volume", volume);
-        foreach (Sound s in sounds) {
-            s.src = gameObject.AddComponent<AudioSource>();
-            s.src.clip = s.clip;
 
-            s.src.volume = s.volume * volume;
-            s.src.pitch = s.pitch;
-        }
-    }*/
+    public void setVolume(float volume) {
+
+        masterVolume = volume;
+    }
 }
