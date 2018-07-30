@@ -242,12 +242,14 @@ public class Disk : Photon.PunBehaviour {
         } else {
             PunReleaseOnTurnEnd();
         }
+        Board.Instance._lastCreatedDisk = null;
     }
 
     [PunRPC]
     public void PunReleaseOnTurnEnd() {
         Debug.Log("PunReleaseOnTurnEnd");
         if (!_released) {
+            Debug.Log("Disk is not released!!!!!!!!!!!!!!!!!!!!!!!");
             _forcedRelease = true;
             Release(Board.Instance.GetHook(this.Alliance).transform.position + new Vector3(0, 3f, 0));
         }
