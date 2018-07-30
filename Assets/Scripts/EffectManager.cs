@@ -39,7 +39,7 @@ public class EffectManager : Photon.PunBehaviour {
 
     public GameObject PlayEffect(string name, Vector3 position, GameObject parent) {
 
-        Debug.Log("Playing effect " + name);
+        //Debug.Log("Playing effect " + name);
 
         // Only the player that plays this turn triggers the effect
         // though effect is seen in both players screen via PunPlayEffect
@@ -64,15 +64,15 @@ public class EffectManager : Photon.PunBehaviour {
 
     [PunRPC]
     public GameObject PunPlayEffect(string name, Vector3 position, GameObject parent) {
-        Debug.Log("Actual Playing effect " + name);
+        //Debug.Log("Actual Playing effect " + name);
         GameObject effect = null;
         var prefab = Resources.Load("Effects/" + Effects[name]);
         effect = (GameObject)Instantiate(prefab, position + new Vector3(0, 5, 0), Quaternion.identity);
 
         if (effect) {
-            Debug.Log("Effect " + name + " has been created successfuly");
+            //Debug.Log("Effect " + name + " has been created successfuly");
         } else {
-            Debug.Log("Effect " + name + " has failed to be created (returned null)");
+            //Debug.Log("Effect " + name + " has failed to be created (returned null)");
         }
 
         if (effect && parent) {

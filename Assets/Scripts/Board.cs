@@ -41,12 +41,10 @@ public class Board : Photon.PunBehaviour {
 
         TurnTime = 8;
         TurnCounter = 1;
-        if (isHost) {
-            for (int i = 0; i < 2; i++) {
-                DrawCard();
-            }
+
+        for (int i = 0; i < 2; i++) {
+            DrawCard();
         }
-        
         //Card.CreateCard(7, Hand.transform);
         //Card.CreateCard(7, Hand.transform);
         //Card.CreateCard(7, Hand.transform);
@@ -304,16 +302,16 @@ public class Board : Photon.PunBehaviour {
         //Debug.Log("CreateDisk excepted. alliance = " + alliance + " code = " + code);
         GameObject hook = GetHook(alliance);
 
-        Debug.Log("Attempting to load prefab " + "Characters/Character" + code + " for alliance " + alliance + " isYourTurn " + isYourTurn);
+        //Debug.Log("Attempting to load prefab " + "Characters/Character" + code + " for alliance " + alliance + " isYourTurn " + isYourTurn);
         var prefab = Resources.Load("Characters/Character" + code) as GameObject;
 
         GameObject ins;
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
             ins = PhotonNetwork.Instantiate("Characters/Character" + code, hook.transform.position + new Vector3(0, 3f, 0), Quaternion.identity, 0);
-            Debug.LogError("Instanciating disk with Photon");
+            //Debug.LogError("Instanciating disk with Photon");
         } else {
             ins = Instantiate(prefab, new Vector3(hook.transform.position.x, hook.transform.position.y + 3f, hook.transform.position.z), Quaternion.identity);
-            Debug.LogError("Instanciating disk normally. connected : " + PhotonNetwork.connected + ", " + PhotonNetwork.inRoom);
+            //Debug.LogError("Instanciating disk normally. connected : " + PhotonNetwork.connected + ", " + PhotonNetwork.inRoom);
         }
 
         hook.transform.position = new Vector3(hook.transform.position.x, ins.transform.position.y + ins.transform.localScale.y, hook.transform.position.z);
@@ -827,12 +825,11 @@ public class Board : Photon.PunBehaviour {
 
         if (_lastCreatedDisk) {
             _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();
+        }
+        if (isTutorial) {
+            EndTurnTutorial();
         } else {
-            if (isTutorial) {
-                EndTurnTutorial();
-            } else {
-                EndTurn();
-            }
+            EndTurn();
         }
     }
 
@@ -943,7 +940,9 @@ public class Board : Photon.PunBehaviour {
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
             if (TimeSlider.value <= 0) {
+                Debug.LogError("Time slider is at 0");
                 if (isYourTurn) {
+                    Debug.LogError("Force ending your turn");
                     ForceEndTurn();
                 }
             }
@@ -1286,10 +1285,11 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("OnDiskReleased");
         currentlyReleasedDisk = disk;
 
-        // FIX
+        /* FIX
         if (1 == (TurnCounter % 2)) {
             User.instance.TimesPlayedCard[disk.Code]++;
         }
+        */
 
         if (disk.Alliance == (isHost ? 1 : 0) || isTutorial) {           
             // This is the player that played the move
@@ -1392,8 +1392,8 @@ public class Board : Photon.PunBehaviour {
             Destroy(gameObject);
         }
     }
-
+    /*
     ~Board() {
         DestroyBoard();
-    }
+    }*/
 }

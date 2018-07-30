@@ -121,7 +121,7 @@ public class Disk : Photon.PunBehaviour {
         line.SetPosition(0, SJ.connectedBody.position);
 
         // Health bar settings
-        Debug.Log("Init " + name + " with health " + Health + " of total " + TotalHealth);
+        //Debug.Log("Init " + name + " with health " + Health + " of total " + TotalHealth);
 
         Id = GenerateId();
         HeightOffSet = (Id == 3) ? 0.1f : 0;
@@ -466,11 +466,13 @@ public class Disk : Photon.PunBehaviour {
         }
     }
 
+    /*
     ~Disk()  // destructor
     {
         // cleanup statements...
         DestroyDisk();
     }
+    */
 
 
     internal void Enlarge(float ratio) {
@@ -568,6 +570,6 @@ public class Disk : Photon.PunBehaviour {
     #endregion
 
     void OnDestroy() {
-        Debug.Log("Disk " + Id + " destroyed");
+        //Debug.Log("Disk " + Id + " destroyed");
     }
 }
