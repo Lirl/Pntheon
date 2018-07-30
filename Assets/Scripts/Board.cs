@@ -815,10 +815,12 @@ public class Board : Photon.PunBehaviour {
             return;
         }
 
-        int code = Deck[0];
-        Deck.RemoveAt(0);
+        if (Hand.transform.childCount < 3) {
+            int code = Deck[0];
+            Deck.RemoveAt(0);
 
-        Card.CreateCard(code, Hand.transform);
+            Card.CreateCard(code, Hand.transform);
+        }
     }
 
     public void ForceEndTurn() {
