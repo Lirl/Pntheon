@@ -827,7 +827,7 @@ public class Board : Photon.PunBehaviour {
 
         if (_lastCreatedDisk) {
             Debug.Log("Found last Created Disk: " + _lastCreatedDisk);
-            _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();
+            _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();    
         } else {                
             if (isTutorial) {
                 EndTurnTutorial();
