@@ -18,7 +18,7 @@ public class ShowUserMessage : MonoBehaviour {
         canvas = GetComponent<CanvasGroup>();
         canvas.alpha = 1;
         text = GetComponentInChildren<TextMeshProUGUI>();
-
+        gameObject.transform.SetAsLastSibling();
         if (GameManager.Instance && GameManager.Instance.ShowMessage != null) {
             GetComponent<Image>().enabled = true;
             message = GameManager.Instance.ShowMessage;
@@ -42,6 +42,7 @@ public class ShowUserMessage : MonoBehaviour {
             if(canvas.alpha <= 0) {
                 GetComponent<Image>().enabled = false;
                 fadeOut = false;
+                gameObject.transform.SetAsFirstSibling();
             }
         }
     }
