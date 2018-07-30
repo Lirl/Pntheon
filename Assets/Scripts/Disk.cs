@@ -235,7 +235,9 @@ public class Disk : Photon.PunBehaviour {
     }
 
     public void ReleaseOnTurnEnd() {
-        if (PhotonNetwork.connected) {
+        Debug.Log("Disk is being relesaed from hook");
+        if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            Debug.Log("Releasing from within photon");
             photonView.RPC("PunReleaseOnTurnEnd", PhotonTargets.All);
         } else {
             PunReleaseOnTurnEnd();

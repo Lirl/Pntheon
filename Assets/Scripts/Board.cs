@@ -824,12 +824,15 @@ public class Board : Photon.PunBehaviour {
     public void ForceEndTurn() {
 
         if (_lastCreatedDisk) {
+            Debug.Log("Found last Created Disk: " + _lastCreatedDisk);
             _lastCreatedDisk.GetComponent<Disk>().ReleaseOnTurnEnd();
-        }
-        if (isTutorial) {
-            EndTurnTutorial();
-        } else {
-            EndTurn();
+        } else {                
+            if (isTutorial) {
+                EndTurnTutorial();
+            }
+            else {
+                EndTurn();
+            }
         }
     }
 
