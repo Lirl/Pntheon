@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour {
     public static AudioManager Instance;
     public Slider slider;
     public float masterVolume;
+    public float effectVolume;
     void Awake() {
         DontDestroyOnLoad(this);
         Instance = this;
@@ -24,14 +25,20 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void Play(string name) {
-     
         Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        float lastVolume = s.src.volume;
+        if ((name != "Theme") && (name != "Lose") && (name != "Win")) {
+            s.src.volume = s.src.volume * effectVolume;
+        }
+     
+        
         if (name == "Theme") {
             Debug.Log("Playing main theme");
             s.src.PlayOneShot(s.clip, masterVolume);
             return;
         }
-        float lastVolume = s.src.volume;
+        
         Debug.LogError(lastVolume + " last");
         s.src.volume = s.src.volume * masterVolume;
         Debug.LogError(s.src.volume + " after change");
@@ -53,7 +60,10 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void setVolume(float volume) {
-
         masterVolume = volume;
+    }
+
+    public void setEffectVolume(float volume) {
+        effectVolume = volume;
     }
 }
