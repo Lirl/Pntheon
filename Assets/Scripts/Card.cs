@@ -100,7 +100,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             board.CreateSelectedDisk(this, cube);
             DestroyEffect();
             //GetComponent<Image>().enabled = false;
-            Destroy(this);
+            Debug.LogError("Card Destroyed");
+            //Destroy(this);
+            DestroyCard();
         } else {
             transform.position = startPosition;
             transform.parent = hand;
