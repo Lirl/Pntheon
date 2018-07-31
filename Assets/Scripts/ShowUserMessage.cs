@@ -18,13 +18,13 @@ public class ShowUserMessage : MonoBehaviour {
         canvas = GetComponent<CanvasGroup>();
         canvas.alpha = 1;
         text = GetComponentInChildren<TextMeshProUGUI>();
-        gameObject.transform.SetAsLastSibling();
+        gameObject.transform.SetAsFirstSibling();
         if (GameManager.Instance && GameManager.Instance.ShowMessage != null) {
             GetComponent<Image>().enabled = true;
             message = GameManager.Instance.ShowMessage;
             text.text = message;
             GameManager.Instance.ShowMessage = null;
-
+            gameObject.transform.SetAsLastSibling();
             Invoke("SetFadeOutTrue", 2);
         } else {
             GetComponent<Image>().enabled = false;
@@ -38,6 +38,7 @@ public class ShowUserMessage : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if(fadeOut) {
+            
             canvas.alpha -= Time.deltaTime;
             if(canvas.alpha <= 0) {
                 GetComponent<Image>().enabled = false;
