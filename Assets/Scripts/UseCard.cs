@@ -53,6 +53,7 @@ public class UseCard : MonoBehaviour {
             user.cardLevels[code] = 1;
             Rank.text = "" + user.cardLevels[code];
             user.gold -= cost;
+            user.GoldSpent += cost;
             cost *= 2;
             card.transform.parent = cm.Cards.transform;
             var up = transform.parent.Find("Upgrade");
@@ -69,6 +70,7 @@ public class UseCard : MonoBehaviour {
         if (user.gold >= cost) {            
             user.cardLevels[code]++;
             user.gold -= cost;
+            user.GoldSpent += cost;
             cost *= 2;
             /*if (user.cardLevels[code] == 6) {
                 RectTransform rt = Rank.rectTransform;

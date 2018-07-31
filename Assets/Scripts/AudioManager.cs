@@ -24,7 +24,13 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void Play(string name) {
+     
         Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (name == "Theme") {
+            Debug.Log("Playing main theme");
+            s.src.PlayOneShot(s.clip, masterVolume);
+            return;
+        }
         float lastVolume = s.src.volume;
         Debug.LogError(lastVolume + " last");
         s.src.volume = s.src.volume * masterVolume;

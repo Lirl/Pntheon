@@ -148,8 +148,8 @@ public class Board : Photon.PunBehaviour {
     private void Start() {
         Debug.LogError("BOARD START");
         Instance = this;
-        AudioManager = GameObject.FindObjectOfType<AudioManager>();
-
+        AudioManager = AudioManager.Instance;             //GameObject.FindObjectOfType<AudioManager>();
+        AudioManager.Play("Theme");
         //Init enemy random deck
         for (int i = 0; i < 3; i++) {
             int add = UnityEngine.Random.Range(0, 7);
