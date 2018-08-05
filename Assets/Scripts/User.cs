@@ -126,13 +126,13 @@ public class User : MonoBehaviour {
 
         instance.userName = newName;
         instance.disks = new List<int> {};
-        instance.cardLevels = new List<int> { 1, 1, 1, 0, 0, 0, 0, 0 };
+        instance.cardLevels = new List<int> { 1, 1, 1, 1, 0, 0, 0, 0 };
         instance.wins = 0;
         instance.losses = 0;
         instance.god = 0;
         instance.gold = 300;
         instance.prevGold = 300;
-        instance.deck = new List<int> { 0, 1, 2 };
+        instance.deck = new List<int> { 0, 1, 2, 3};
         instance.deck.Capacity = 5;
         instance.xp = 0;
         instance.prevXp = 0;

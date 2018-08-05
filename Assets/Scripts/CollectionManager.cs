@@ -108,36 +108,40 @@ public class CollectionManager : MonoBehaviour {
 
     public void Swap(UseCard card) {
         //Pressing The First Card
-        if (!firstCardClicked) {
-            ChangeTextToAll("Replace");
-            firstCardClicked = true;
-            lastClickedCard = card;
-            firstClickedIsOnDeck = (card.card.transform.parent == Deck.transform);
-            Glow(true);
-            Debug.Log("First card clicked is in " + card.card.transform.parent);
-        //Choosing which card to replace
-        } else {
-            ChangeTextToAll("Use");
-            Glow(false);
-            if (!firstClickedIsOnDeck) { 
-                if (!user) {
-                    Debug.LogError("Cant find user");
+        if (Deck.transform.childCount == 4 && (lastClickedCard != card)) {
+            if (!firstCardClicked) {
+                ChangeTextToAll("Replace");
+                firstCardClicked = true;
+                lastClickedCard = card;
+                firstClickedIsOnDeck = (card.card.transform.parent == Deck.transform);
+                Glow(true);
+                Debug.Log("First card clicked is in " + card.card.transform.parent);
+                //Choosing which card to replace
+            }
+            else {
+                ChangeTextToAll("Use");
+                Glow(false);
+                if (!firstClickedIsOnDeck) {
+                    if (!user) {
+                        Debug.LogError("Cant find user");
+                    }
+                    user.deck.Remove(card.code);
+                    user.deck.Add(lastClickedCard.code);
+                    user.disks.Remove(lastClickedCard.code);
+                    user.disks.Add(card.code);
+                    card.card.transform.parent = Cards.transform;
+                    lastClickedCard.card.transform.parent = Deck.transform;
+                    firstCardClicked = false;
                 }
-                user.deck.Remove(card.code);
-                user.deck.Add(lastClickedCard.code);
-                user.disks.Remove(lastClickedCard.code);
-                user.disks.Add(card.code);
-                card.card.transform.parent = Cards.transform;
-                lastClickedCard.card.transform.parent = Deck.transform;
-                firstCardClicked = false;
-            } else {
-                user.deck.Add(card.code);
-                user.deck.Remove(lastClickedCard.code);
-                user.disks.Add(lastClickedCard.code);
-                user.disks.Remove(card.code);
-                card.card.transform.parent = Deck.transform;
-                lastClickedCard.card.transform.parent = Cards.transform;
-                firstCardClicked = false;
+                else {
+                    user.deck.Add(card.code);
+                    user.deck.Remove(lastClickedCard.code);
+                    user.disks.Add(lastClickedCard.code);
+                    user.disks.Remove(card.code);
+                    card.card.transform.parent = Deck.transform;
+                    lastClickedCard.card.transform.parent = Cards.transform;
+                    firstCardClicked = false;
+                }
             }
         }
     }
@@ -145,7 +149,10 @@ public class CollectionManager : MonoBehaviour {
     private void ChangeTextToAll(string v) {
         foreach (GameObject go in Descriptions) {
             var useCard = go.GetComponentInChildren<UseCard>();
-            useCard.use.text = v;
+            int code = useCard.code;
+            if (User.instance.deck.Contains(code) || User.instance.disks.Contains(code)) {
+                useCard.use.text = v;
+            }            
         }
     }
 

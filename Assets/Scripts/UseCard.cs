@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UseCard : MonoBehaviour {
 
     public int code;
-    public int cost;
+    public int cost = 1;
     public GameObject card;
     public CollectionManager cm;
     private User user;
@@ -20,7 +20,7 @@ public class UseCard : MonoBehaviour {
 
     private void Start() {
         user = FindObjectOfType<User>();
-        int cost = 100;
+        //int cost = 100;
         /*
         for(int i = 0; i < user.cardLevels[code]; i++) {
             Debug.Log("Card " + code + " Level is: " + user.cardLevels[code]);
@@ -39,16 +39,19 @@ public class UseCard : MonoBehaviour {
     }
 
     public void Use() {
-        if (use.text.Contains("Buy")) {
+        if (use.text.StartsWith("Buy")) {
             Buy();
-            cm.ChangeText("Use", use.transform.parent.gameObject);
+            //cm.ChangeText("Use", use.transform.parent.gameObject);
             return;
         }
-        cm.Swap(this);
+        else {
+            cm.Swap(this);
+        }
     }
 
     public void Buy() {
         if (user.gold >= cost) {
+            cm.ChangeText("Use", use.transform.parent.gameObject);
             user.disks.Add(code);
             user.cardLevels[code] = 1;
             Rank.text = "" + user.cardLevels[code];
