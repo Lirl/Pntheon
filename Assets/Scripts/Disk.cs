@@ -466,6 +466,9 @@ public class Disk : Photon.PunBehaviour {
             }
         } else {
             // TODO: have a death effect
+            if (!_released && Board.Instance.isTutorial) {
+                ReleaseOnTurnEnd();
+            }
             Destroy(gameObject);
         }
     }

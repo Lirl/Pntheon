@@ -130,8 +130,8 @@ public class User : MonoBehaviour {
         instance.wins = 0;
         instance.losses = 0;
         instance.god = 0;
-        instance.gold = 1000;
-        instance.prevGold = 1000;
+        instance.gold = 300;
+        instance.prevGold = 300;
         instance.deck = new List<int> { 0, 1, 2 };
         instance.deck.Capacity = 5;
         instance.xp = 0;

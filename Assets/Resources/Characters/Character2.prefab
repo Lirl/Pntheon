@@ -415,8 +415,8 @@ MonoBehaviour:
   SJ: {fileID: 0}
   mesh: {fileID: 0}
   Alliance: 0
-  Health: 30
-  TotalHealth: 30
+  Health: 28
+  TotalHealth: 28
   Range: 30
   Attack: 10
   Id: 2
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b51bbcaa8bed2ac41bb694625c21dc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealAmount: 2
+  HealAmount: 0.3
 --- !u!120 &120589679468314852
 LineRenderer:
   m_ObjectHideFlags: 1

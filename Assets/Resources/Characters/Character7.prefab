@@ -416,10 +416,10 @@ MonoBehaviour:
   SJ: {fileID: 0}
   mesh: {fileID: 0}
   Alliance: 0
-  Health: 70
-  TotalHealth: 70
+  Health: 48
+  TotalHealth: 48
   Range: 30
-  Attack: 10
+  Attack: 8
   Id: 2
   classType: 2
   Enable: 1
