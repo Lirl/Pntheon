@@ -42,11 +42,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         var ui = Resources.Load("Cards/Card" + code);
         var ins = Instantiate(ui, new Vector3(), Quaternion.Euler(new Vector3(90f, (!Board.Instance.isHost) ? 180f : 0f, 0f))) as GameObject;
 
-        ins.transform.localScale = new Vector3(.25f, .25f, .25f);
+        //ins.transform.localScale = new Vector3(.25f, .25f, .25f);
 
         if (parent) {
             ins.transform.parent = parent;
-            ins.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+            //ins.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
         }
 
         var card = ins.GetComponent<Card>();
