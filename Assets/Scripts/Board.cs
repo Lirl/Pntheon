@@ -168,6 +168,11 @@ public class Board : Photon.PunBehaviour {
         // UI Setop
         Hand = GameObject.Find("Hand");
         TimeMessage = GameObject.Find("TimeMessage") as GameObject;
+        if (!TimeMessage) {
+            Debug.Log("Cant find TimeMesseage");
+        } else {
+            Debug.Log("Found TimeMesseage " + TimeMessage);
+        }
 
         alertCanvas = GameObject.Find("AlertText").GetComponent<CanvasGroup>();
         yourScore = GameObject.Find("YourScore");
@@ -186,10 +191,12 @@ public class Board : Photon.PunBehaviour {
 
         // Check player connectivity
         if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
-            isHost = PhotonNetwork.isMasterClient;
+            isHost = PhotonNetwork.isMasterClient;            
         } else {
             isHost = true;
         }
+
+        User.instance.CurrentAlliance = isHost ? 1 : 0;
 
         // The only way this condition will suffies
         // is when the user has entered his first game, which loads this scene without being
@@ -301,6 +308,9 @@ public class Board : Photon.PunBehaviour {
     internal GameObject CreateDisk(int alliance, int code) {
         //Debug.Log("CreateDisk excepted. alliance = " + alliance + " code = " + code);
         GameObject hook = GetHook(alliance);
+        if (alliance == User.instance.CurrentAlliance) {
+            User.instance.TimesPlayedCard[code]++;
+        }
 
         //Debug.Log("Attempting to load prefab " + "Characters/Character" + code + " for alliance " + alliance + " isYourTurn " + isYourTurn);
         var prefab = Resources.Load("Characters/Character" + code) as GameObject;
@@ -904,9 +914,11 @@ public class Board : Photon.PunBehaviour {
                 if (isTutorial) {
                     User.instance.WinsAgainstAI++;
                 } else {
-                    User.instance.CurrentWinningStreak++;
-                    if (User.instance.CurrentWinningStreak > User.instance.LongestWinningStreak) {
-                        User.instance.LongestWinningStreak = User.instance.CurrentWinningStreak;
+                    if (User.instance.CurrentAlliance == alliance) {
+                        User.instance.CurrentWinningStreak++;
+                        if (User.instance.CurrentWinningStreak > User.instance.LongestWinningStreak) {
+                            User.instance.LongestWinningStreak = User.instance.CurrentWinningStreak;
+                        }
                     }
                 }
                 AudioManager.Play("Win");
@@ -1290,13 +1302,7 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("OnDiskReleased");
         currentlyReleasedDisk = disk;
 
-        /* FIX
-        if (1 == (TurnCounter % 2)) {
-            User.instance.TimesPlayedCard[disk.Code]++;
-        }
-        */
-
-        if (disk.Alliance == (isHost ? 1 : 0) || isTutorial) {           
+        if (disk.Alliance == (isHost ? 1 : 0) || isTutorial) {            
             // This is the player that played the move
             // He should end the turn
             _diskIdleTriggered = false;

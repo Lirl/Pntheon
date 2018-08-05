@@ -40,6 +40,7 @@ public class User : MonoBehaviour {
     public int playerLevel;
     public int prevXp;
     public List<int> levelsAndXp = new List<int> { 0, 100, 300, 1000, 5000, 15000 };
+    public int CurrentAlliance;
 
     public bool BackFromGame;
 

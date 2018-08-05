@@ -79,7 +79,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1731752532988852}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.430747, y: 7.56, z: -16.784225}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 0.1, z: 5}
   m_Children:
   - {fileID: 4821790170370498}
@@ -95,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 1714782767698880}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1.36, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.11, y: 0.13, z: 1}
   m_Children: []
   m_Father: {fileID: 4249372770971846}
   m_RootOrder: 0
@@ -546,7 +546,7 @@ SpringJoint:
   m_ConnectedBody: {fileID: 0}
   m_Anchor: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -8.430747, y: 7.66, z: -16.784225}
+  m_ConnectedAnchor: {x: -1.8189127, y: -1.1688417, z: 0.8809831}
   serializedVersion: 2
   m_Spring: 20
   m_Damper: 0.2
@@ -593,7 +593,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d29ab4cc3e1fba546997b8f16da76913, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca5bc9482ff0e0c4586f176216114d5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -9,7 +9,6 @@ public class AudioManager : MonoBehaviour {
     //public AudioMixer audiomix;
     public Sound[] sounds;
     public static AudioManager Instance;
-    public Slider slider;
     public float masterVolume;
     public float effectVolume;
     void Awake() {
@@ -34,14 +33,12 @@ public class AudioManager : MonoBehaviour {
      
         
         if (name == "Theme") {
-            Debug.Log("Playing main theme");
             s.src.PlayOneShot(s.clip, masterVolume);
             return;
         }
         
-        Debug.LogError(lastVolume + " last");
         s.src.volume = s.src.volume * masterVolume;
-        Debug.LogError(s.src.volume + " after change");
+
         s.src.Play();
         StartCoroutine(changeVolume(s, lastVolume, 0.2f));
        
