@@ -18,7 +18,7 @@ public class RecordBook : MonoBehaviour {
                         user.WinsAgainstAI + "\n  " +
                         user.LossesAgainstAI + "\n\n  " +
                         (user.wins - user.WinsAgainstAI) + "\n  " +
-                        (user.losses - user.LossesAgainstAI) + "\n\n  " +
+                        (user.losses - user.LossesAgainstAI) + "\n  " +
                         ConvertCodeToString(code) + "\n  " + count + "\n\n " +
                         user.GoldSpent;
     }
