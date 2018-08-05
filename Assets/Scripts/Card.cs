@@ -29,6 +29,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         layout = GetComponent<LayoutElement>();
     }
 
+    private void Update() {
+        if (transform.localScale != new Vector3(2f, 2f, 2f)) {
+            transform.localScale = new Vector3(2f, 2f, 2f);
+        }    
+    }
     public static GameObject cardBeingDragged = null;
     Vector3 startPosition;
     Transform hand;
@@ -46,7 +51,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         if (parent) {
             ins.transform.parent = parent;
-            //ins.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
+            ins.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 0f);
         }
 
         var card = ins.GetComponent<Card>();
