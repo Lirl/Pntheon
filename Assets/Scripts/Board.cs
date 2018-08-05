@@ -866,10 +866,7 @@ public class Board : Photon.PunBehaviour {
             }
 
             if (PhotonNetwork.connected && PhotonNetwork.inRoom) {                
-                PhotonNetwork.RaiseEvent(0, GetTilesAsString(), true, null);
-                if (!_lastCreatedDisk) {
-                    StartTurn();
-                }
+                PhotonNetwork.RaiseEvent(0, GetTilesAsString(), true, null);                
             } else {
                 isHost = !isHost;
                 StartTurn();
@@ -968,7 +965,7 @@ public class Board : Photon.PunBehaviour {
             TimeSlider.value -= Time.deltaTime;
             if (TimeSlider.value <= 0 && !forceEnd) {                              
                 //Debug.LogError("Time slider is at 0");
-                if (!PhotonNetwork.inRoom) {
+                if (!PhotonNetwork.inRoom && !isTutorialShowMessages) {
                     forceEnd = true;
                 }
                 if (isYourTurn) {
