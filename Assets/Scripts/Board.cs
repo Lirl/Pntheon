@@ -963,7 +963,7 @@ public class Board : Photon.PunBehaviour {
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
             if (TimeSlider.value <= 0 && !forceEnd) {                              
-                Debug.LogError("Time slider is at 0");
+                //Debug.LogError("Time slider is at 0");
                 if (!PhotonNetwork.inRoom) {
                     forceEnd = true;
                 }
@@ -1225,9 +1225,9 @@ public class Board : Photon.PunBehaviour {
     void OnEvent(byte eventcode, object content, int senderid) {
         TurnCounter++;
 
-        Debug.Log("OnEvent Triggered " + eventcode + " , " + content);
+        //Debug.Log("OnEvent Triggered " + eventcode + " , " + content);
         if (eventcode == 0 && !isYourTurn) {
-            Debug.Log("OnEvent Triggered " + eventcode + " , " + content);
+            //Debug.Log("OnEvent Triggered " + eventcode + " , " + content);
             //HandleSyncTiles((string)content);
             StartTurn();
         }
@@ -1400,7 +1400,7 @@ public class Board : Photon.PunBehaviour {
 
     [PunRPC]
     private void PunResetTurnSlider() {
-        Debug.Log("PunResetTurnSlider " + TurnTime + " is host: " + isHost);
+        //Debug.Log("PunResetTurnSlider " + TurnTime + " is host: " + isHost);
         TimeSlider.value = TurnTime;
     }
 

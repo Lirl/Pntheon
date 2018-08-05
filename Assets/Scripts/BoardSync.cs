@@ -31,7 +31,7 @@ public class BoardSync : Photon.PunBehaviour {
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        Debug.Log("Board Sync OnPhotonSerializeView " + stream.isWriting);
+        //Debug.Log("Board Sync OnPhotonSerializeView " + stream.isWriting);
         if (stream.isWriting) {
             stream.SendNext(_board.GetTilesAsString());
             stream.SendNext(_board.Score[0]);
