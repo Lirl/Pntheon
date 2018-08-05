@@ -962,9 +962,11 @@ public class Board : Photon.PunBehaviour {
         gameTime -= Time.deltaTime;
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
-            if (TimeSlider.value <= 0 && (!forceEnd || !isTutorial)) {                              
+            if (TimeSlider.value <= 0 && !forceEnd) {                              
                 Debug.LogError("Time slider is at 0");
-                forceEnd = true;
+                if (!PhotonNetwork.inRoom) {
+                    forceEnd = true;
+                }
                 if (isYourTurn) {
                     Debug.LogError("Force ending your turn");
                     ForceEndTurn();
