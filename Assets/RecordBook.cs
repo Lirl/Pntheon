@@ -7,20 +7,26 @@ public class RecordBook : MonoBehaviour {
 
     private int count = 0;
     private int code = 0;
+    public bool favoriteCard;
 
     // Use this for initialization
     void Start() {
         GetTotalPlayes();
         var tmp = GetComponent<TextMeshProUGUI>();
         var user = User.instance;
-        tmp.text = "  " + user.LongestWinningStreak + "\n  " +
+        if (favoriteCard) {
+            tmp.text = ConvertCodeToString(code);
+        }
+        else {
+            tmp.text = "  " + user.LongestWinningStreak + "\n  " +
                         user.CurrentWinningStreak + "\n\n  " +
                         user.WinsAgainstAI + "\n  " +
                         user.LossesAgainstAI + "\n\n  " +
                         (user.wins - user.WinsAgainstAI) + "\n  " +
-                        (user.losses - user.LossesAgainstAI) + "\n  " +
-                        ConvertCodeToString(code) + "\n  " + count + "\n\n " +
-                        user.GoldSpent;
+                        (user.losses - user.LossesAgainstAI) + "\n\n\n  " +
+                        count;
+        }
+        
     }
 
     public void GetTotalPlayes() {
@@ -37,7 +43,7 @@ public class RecordBook : MonoBehaviour {
             case 0:
                 return "Priest";
             case 1:
-                return "Warrior";
+                return "Warrior eagle";
             case 2:
                 return "Wizard";
             case 3:

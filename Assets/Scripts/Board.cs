@@ -688,7 +688,7 @@ public class Board : Photon.PunBehaviour {
                 }
 
                 if (TurnCounter == 7) {
-                    TutorialManager.Instance.ShowMessage("This is a tutorial game \n\n In real games, each player has 5 seconds to play each turn", 4, 15);
+                    TutorialManager.Instance.ShowMessage("This is a tutorial game \n\n In real games, each player has a couple of seconds to play each turn", 4, 15);
 
                     // Destroy score arrow prefab
                     var arrows = GameObject.FindGameObjectsWithTag("UIPrefab");
