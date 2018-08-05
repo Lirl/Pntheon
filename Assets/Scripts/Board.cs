@@ -796,7 +796,7 @@ public class Board : Photon.PunBehaviour {
         if (gameIsOver) {
             return;
         }
-
+        Debug.Log("isYourTurn = " + isYourTurn + " TurnHasEnded = " + TurnHasEnded);
         ResetTurnSlider();
 
         isYourTurn = true;
