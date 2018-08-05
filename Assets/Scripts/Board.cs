@@ -865,8 +865,11 @@ public class Board : Photon.PunBehaviour {
                 Hand.SetActive(false);
             }
 
-            if (PhotonNetwork.connected && PhotonNetwork.inRoom) {
+            if (PhotonNetwork.connected && PhotonNetwork.inRoom) {                
                 PhotonNetwork.RaiseEvent(0, GetTilesAsString(), true, null);
+                if (!_lastCreatedDisk) {
+                    StartTurn();
+                }
             } else {
                 isHost = !isHost;
                 StartTurn();
