@@ -92,7 +92,7 @@ Transform:
   m_GameObject: {fileID: 1138953422600828}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -17.565807, y: -0.06, z: 0.6348402}
-  m_LocalScale: {x: 7, y: 0.1, z: 7}
+  m_LocalScale: {x: 8.5, y: 0.1, z: 8.5}
   m_Children:
   - {fileID: 4423690036979664}
   - {fileID: 224148218327432998}
@@ -389,7 +389,7 @@ MonoBehaviour:
   Health: 50
   TotalHealth: 50
   Range: 30
-  Attack: 10
+  Attack: 20
   Id: 3
   classType: 0
   Enable: 1

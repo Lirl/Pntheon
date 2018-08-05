@@ -45,6 +45,13 @@ public class AudioManager : MonoBehaviour {
         //Debug.Log("Played Sound");
     }
 
+    public void StopPlaying(string name) {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s.src.isPlaying) {
+            s.src.Stop();
+        }        
+    }
+
     public void PlayFor(string name, float time) {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.src.PlayScheduled(time);

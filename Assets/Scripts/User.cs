@@ -125,7 +125,7 @@ public class User : MonoBehaviour {
         string newName = texts[0].text;
 
         instance.userName = newName;
-        instance.disks = new List<int> { 3};
+        instance.disks = new List<int> {};
         instance.cardLevels = new List<int> { 1, 1, 1, 0, 0, 0, 0, 0 };
         instance.wins = 0;
         instance.losses = 0;

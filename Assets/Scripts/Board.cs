@@ -480,7 +480,7 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("OnDisksIdle");
         if (!_diskIdleTriggered) {
             _diskIdleTriggered = true;
-            if (isTutorial && isHost) {
+            if (isTutorial) {
                 EndTurnTutorial();
             } else {
                 EndTurn();

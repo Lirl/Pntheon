@@ -150,10 +150,11 @@ public class GameManager : Photon.PunBehaviour {
     public void OnLeftRoom() {
         Debug.LogError("OnLeftRoom()");
         PhotonNetwork.Disconnect();
+        AudioManager.Instance.StopPlaying("Theme");
 
         // Message is set when game is over. Any leave before that leads to this message
         // cause ShowMessage is null
-        if(ShowMessage == null) {
+        if (ShowMessage == null) {            
             ShowMessage = "Your opponent has left";
         }
         

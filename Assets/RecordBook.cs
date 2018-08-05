@@ -43,15 +43,15 @@ public class RecordBook : MonoBehaviour {
             case 0:
                 return "Priest";
             case 1:
-                return "Warrior eagle";
+                return "Warrior";
             case 2:
-                return "Wizard";
+                return "Cuacasian Eagle";
             case 3:
-                return "Brute";
+                return "enforcer";
             case 4:
-                return "Shaman";
+                return "Acolyte";
             case 5:
-                return "Assasin";
+                return "Namean Lion";
             case 6:
                 return "Warlord";
             case 7:
