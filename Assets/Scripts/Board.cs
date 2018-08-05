@@ -814,7 +814,7 @@ public class Board : Photon.PunBehaviour {
         
         // 10 seconds turn
         // TODO: add end turn indication
-        Debug.Log("Invoke EndTurn " + (isYourTurn ? "your turn" : "not your turn"));
+        //Debug.Log("Invoke EndTurn " + (isYourTurn ? "your turn" : "not your turn"));
         //Invoke("ForceEndTurn", TurnTime);
         if (Hand) {
             Hand.SetActive(true);
@@ -859,6 +859,7 @@ public class Board : Photon.PunBehaviour {
         if (isYourTurn && !TurnHasEnded) {
             TurnHasEnded = true;
             isYourTurn = false;
+            Debug.Log("EndTurn after check " + (isYourTurn ? "your turn" : "not your turn"));
 
             if (Hand) {
                 Hand.SetActive(false);
