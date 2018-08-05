@@ -149,7 +149,7 @@ public class Board : Photon.PunBehaviour {
         Debug.LogError("BOARD START");
         Instance = this;
         AudioManager = AudioManager.Instance;             //GameObject.FindObjectOfType<AudioManager>();
-        AudioManager.Play("Theme");
+        
         //Init enemy random deck
         for (int i = 0; i < 3; i++) {
             int add = UnityEngine.Random.Range(0, 7);
@@ -210,6 +210,9 @@ public class Board : Photon.PunBehaviour {
             isTutorial = true;
 
             //Invoke("CheckWinner", gameTime);
+        }
+        if (!isTutorialShowMessages) {
+            AudioManager.Play("Theme");
         }
 
         Alert(isHost ? "I am Host" : "I am Client");
@@ -681,6 +684,7 @@ public class Board : Photon.PunBehaviour {
                     Invoke("TurnDownTheLights", 60f);
                     Invoke("StartTheFire", 80f);
                     gameTime = 90;
+                    AudioManager.Play("Theme");
                     Invoke("CheckWinner", 90f);
                     isTutorialDontShowTime = false;
                     TutorialManager.Instance.ShowMessage("A round lasts 90 seconds! \n\n player with the highest score wins", 4, 15);
