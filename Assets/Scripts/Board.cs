@@ -144,6 +144,7 @@ public class Board : Photon.PunBehaviour {
     private int _diskFallenCount = 0;
     private int _numberOfDiskHits;
     private bool isTutorialShowMessages;
+    private bool forceEnd;
 
     private void Start() {
         Debug.LogError("BOARD START");
@@ -479,7 +480,7 @@ public class Board : Photon.PunBehaviour {
         Debug.Log("OnDisksIdle");
         if (!_diskIdleTriggered) {
             _diskIdleTriggered = true;
-            if (isTutorial) {
+            if (isTutorial && isHost) {
                 EndTurnTutorial();
             } else {
                 EndTurn();
@@ -784,6 +785,7 @@ public class Board : Photon.PunBehaviour {
         isHost = !isHost;
         TurnCounter++;
         StartTurnTutorial();
+        forceEnd = false;
     }
 
     #endregion
@@ -960,8 +962,9 @@ public class Board : Photon.PunBehaviour {
         gameTime -= Time.deltaTime;
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
-            if (TimeSlider.value <= 0) {
+            if (TimeSlider.value <= 0 && !forceEnd) {                              
                 Debug.LogError("Time slider is at 0");
+                forceEnd = true;
                 if (isYourTurn) {
                     Debug.LogError("Force ending your turn");
                     ForceEndTurn();
