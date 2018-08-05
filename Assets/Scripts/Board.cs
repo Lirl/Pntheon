@@ -962,7 +962,7 @@ public class Board : Photon.PunBehaviour {
         gameTime -= Time.deltaTime;
         if (!isTutorialShowMessages) {
             TimeSlider.value -= Time.deltaTime;
-            if (TimeSlider.value <= 0 && !forceEnd) {                              
+            if (TimeSlider.value <= 0 && (!forceEnd || !isTutorial)) {                              
                 Debug.LogError("Time slider is at 0");
                 forceEnd = true;
                 if (isYourTurn) {
