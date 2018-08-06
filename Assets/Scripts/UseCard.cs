@@ -51,6 +51,7 @@ public class UseCard : MonoBehaviour {
 
     public void Buy() {
         if (user.gold >= cost) {
+            AudioManager.Instance.Play("Brown Button");
             cm.ChangeText("Use", use.transform.parent.gameObject);
             user.disks.Add(code);
             user.cardLevels[code] = 1;
@@ -66,6 +67,8 @@ public class UseCard : MonoBehaviour {
             upgrade.color = Color.white;
             DecreaseGold();
             user.Save();
+        } else {
+            AudioManager.Instance.Play("White Button");
         }
     }
 

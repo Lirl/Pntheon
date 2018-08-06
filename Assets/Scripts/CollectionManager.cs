@@ -119,6 +119,7 @@ public class CollectionManager : MonoBehaviour {
                 //Choosing which card to replace
             }
             else {
+                AudioManager.Instance.Play("Brown Button");
                 ChangeTextToAll("Use");
                 Glow(false);
                 if (!firstClickedIsOnDeck) {
